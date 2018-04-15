@@ -1,0 +1,16 @@
+{
+    "name": "dsna/nmb2b-client",
+    "description": "PHP Client for NM B2B Web services",
+    "type": "library",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Bruno Spyckerelle",
+            "email": "bruno@spyckerelle.fr"
+        }
+    ],
+    "require": {
+        "php": "^7.0",
+        "ext-soap": "*"
+    }
+}
