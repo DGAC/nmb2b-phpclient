@@ -1,5 +1,5 @@
 {
-  "name": "dsna/nmb2b-client",
+  "name": "dsna/nmb2b-phpclient",
   "description": "PHP Client for NM B2B Web services",
   "type": "library",
   "license": "GPL-3.0-or-later",
