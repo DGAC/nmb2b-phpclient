@@ -18,6 +18,7 @@ namespace DSNA\NMB2BDriver;
 
 use DSNA\NMB2BDriver\Exception\WSDLFileUnavailable;
 use DSNA\NMB2BDriver\Services\AirspaceServices;
+use DSNA\NMB2BDriver\Services\FlowServices;
 
 /**
  * Class NMB2BClientFactory
@@ -39,9 +40,6 @@ class NMB2BClient
         'cache_wsdl' => WSDL_CACHE_NONE
     );
 
-    private $certPath;
-    private $passphrase;
-
     private $wsdl;
 
     /**
@@ -61,8 +59,9 @@ class NMB2BClient
             )
         ));
         $this->options = array_merge($this->options, $options);
-        $this->certPath = $certPath;
-        $this->passphrase = $passphrase;
+        $this->options['local_cert'] = $certPath;
+        $this->options['passphrase'] = $passphrase;
+
         $this->wsdl = $wsdl;
     }
 
@@ -101,6 +100,6 @@ class NMB2BClient
                 throw new WSDLFileUnavailable('Path to FlowServices WSDL file missing.');
             }
         }
-        return $this->airspaceServices;
+        return $this->flowServices;
     }
 }

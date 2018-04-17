@@ -15,6 +15,7 @@
  */
 
 namespace DSNA\NMB2BDriver\Services;
+
 use DSNA\NMB2BDriver\Models\EAUPChain;
 use DSNA\NMB2BDriver\Models\EAUPRSAs;
 
