@@ -27,6 +27,7 @@ class NMB2BClient
 {
 
     private $airspaceServices;
+    private $flowServices;
 
     /**
      * Default options
@@ -88,6 +89,18 @@ class NMB2BClient
 
     public function flowServices()
     {
-
+        if($this->flowServices == null)
+        {
+            if(array_key_exists('flowservices', $this->wsdl)) {
+                if(file_exists($this->wsdl['flowservices'])) {
+                    $this->flowServices = new FlowServices(new \SoapClient($this->wsdl['flowservices'], $this->options));
+                } else {
+                    throw new WSDLFileUnavailable('FlowServices WSDL is not a file.');
+                }
+            } else {
+                throw new WSDLFileUnavailable('Path to FlowServices WSDL file missing.');
+            }
+        }
+        return $this->airspaceServices;
     }
 }

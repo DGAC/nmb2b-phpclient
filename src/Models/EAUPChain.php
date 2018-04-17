@@ -20,32 +20,13 @@ namespace DSNA\NMB2BDriver\Models;
  * Class EAUPChain
  * @package DSNA\NMB2BDriver\Models
  */
-class EAUPChain
+class EAUPChain extends SoapResponse
 {
-
-    private $xml;
-    private $str;
-
-    public function __construct($strXML)
-    {
-
-        $this->xml = new \SimpleXMLElement($strXML);
-    }
-
-    public function getXML()
-    {
-        return $this->xml;
-    }
-
-    public function getString()
-    {
-        return $this->str;
-    }
 
     public function getLastSequenceNumber()
     {
         $sequenceNumber = - 1;
-        foreach ($this->xml
+        foreach ($this->getXML()
                      ->children('http://schemas.xmlsoap.org/soap/envelope/')
                      ->Body
                      ->children('eurocontrol/cfmu/b2b/AirspaceServices')
@@ -66,7 +47,7 @@ class EAUPChain
     public function getAUPSequenceNumber()
     {
         $sequenceNumber = -1;
-        $validity = new \DateTime($this->xml
+        $validity = new \DateTime($this->getXML()
                 ->children('http://schemas.xmlsoap.org/soap/envelope/')
                 ->Body
                 ->children('eurocontrol/cfmu/b2b/AirspaceServices')
@@ -75,7 +56,7 @@ class EAUPChain
                 ->data
                 ->chain
                 ->chainDate . ' 06:00:00');
-        foreach ($this->xml
+        foreach ($this->getXML()
                      ->children('http://schemas.xmlsoap.org/soap/envelope/')
                      ->Body
                      ->children('eurocontrol/cfmu/b2b/AirspaceServices')

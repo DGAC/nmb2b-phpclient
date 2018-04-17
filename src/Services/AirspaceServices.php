@@ -16,35 +16,21 @@
 
 namespace DSNA\NMB2BDriver\Services;
 use DSNA\NMB2BDriver\Models\EAUPChain;
+use DSNA\NMB2BDriver\Models\EAUPRSAs;
 
 /**
  * Class AirspaceServices
  * @package DSNA\NMB2BDriver\Services
  */
-class AirspaceServices
+class AirspaceServices extends Service
 {
-
-    private $soapClient;
-
-    public function __construct($soapClient)
-    {
-        $this->soapClient = $soapClient;
-    }
-
-    /**
-     * @return \SoapClient
-     */
-    public function getSoapClient() : \SoapClient
-    {
-        return $this->soapClient;
-    }
 
     /**
      * @param \DateTime $chainDate
      * @return EAUPChain
      * @throws \SoapFault
      */
-    public function retrieveEAUPChain(\DateTime $chainDate)
+    public function retrieveEAUPChain(\DateTime $chainDate): EAUPChain
     {
         $now = new \DateTime('now');
 
@@ -53,8 +39,35 @@ class AirspaceServices
             'chainDate' => $chainDate->format('Y-m-d')
         );
 
-        $this->soapClient->retrieveEAUPChain($params);
+        $this->getSoapClient()->retrieveEAUPChain($params);
 
-        return new EAUPChain($this->soapClient->__getLastResponse());
+        return new EAUPChain($this->getSoapClient()->__getLastResponse());
+    }
+
+    /**
+     * @param $designators
+     * @param \DateTime $date
+     * @param $sequenceNumber
+     * @return EAUPRSAs
+     */
+    public function retrieveEAUPRSAs($designators, \DateTime $date, $sequenceNumber) : EAUPRSAs
+    {
+        $now = new \DateTime('now');
+
+        $params = array(
+            'sendTime' => $now->format('Y-m-d H:i:s'),
+            'eaupId' => array(
+                'chainDate' => $date->format('Y-m-d'),
+                'sequenceNumber' => $sequenceNumber
+            )
+        );
+
+        if ($designators !== null && strlen($designators) > 0) {
+            $params['rsaDesignators'] = $designators;
+        }
+
+        $this->getSoapClient()->retrieveEAUPRSAs($params);
+
+        return new EAUPRSAs($this->getSoapClient()->__getLastResponse());
     }
 }
