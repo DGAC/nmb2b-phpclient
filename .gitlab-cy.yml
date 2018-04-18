@@ -1,0 +1,13 @@
+before_script:
+- export http_proxy=http://10.196.32.91:3142
+- apt-get update -y
+- apt-get install -qqy git unzip
+- composer install --no-interaction --prefer-dist
+- sed -e '/$CERTPATH/$AIRSPACESERVICEPATH' --in-place tests/config.php
+
+test:7.0:
+  image: php:7.0
+  stage: test
+  script:
+  - cat tests/config.php
+  - vendor/bin/phpunit
