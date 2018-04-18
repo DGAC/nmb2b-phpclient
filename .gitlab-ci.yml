@@ -13,7 +13,10 @@ before_script:
 - php composer-setup.php
 - php -r "unlink('composer-setup.php'); unlink('installer.sig');"
 - php composer.phar install --no-interaction --prefer-dist
-- sed -e "s?CERTPATH?$AIRSPACESERVICEPATH?" --in-place tests/config.php
+- sed -e "s?CERTPATH?$CERTPATH?" --in-place tests/config.php
+- sed -e "s?AIRSPACESERVICES?$AIRSPACESERVICEPATH?" --in-place tests/config.php
+- sed -e "s?FLOWSERVICES?$FLOWSERVICEPATH?" --in-place tests/config.php
+- sed -e "s?PASSPHRASE?$PASSPHRASE?" --in-place tests/config.php
 
 test:7.1:
   image: php:7.1
