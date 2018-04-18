@@ -1,9 +1,9 @@
 <?php
 return array(
-    'certPath' => CERTPATH,
+    'certPath' => 'CERTPATH',
     'wsdl' => array(
-        'airspaceServices' => AIRSPACESERVICES,
-        'flowServices' => FLOWSERVICES
+        'airspaceServices' => 'AIRSPACESERVICES',
+        'flowServices' => 'FLOWSERVICES'
     ),
-    'passphrase' => PASSPHRASE
+    'passphrase' => 'PASSPHRASE'
 );
