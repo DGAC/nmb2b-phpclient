@@ -64,6 +64,6 @@ class AirspaceServicesTest extends TestCase
         $result = new EAUPChain($this->getSoapClient()->__getLastResponse());
 
         $this->assertEquals(5, $result->getAUPSequenceNumber());
-        $this->assertEquals(17, $result->getLastSequenceNumber());
+        $this->assertEquals(17, intval($result->getLastSequenceNumber()));
     }
 }
