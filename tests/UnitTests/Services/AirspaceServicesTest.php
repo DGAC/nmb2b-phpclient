@@ -19,6 +19,10 @@ namespace DSNA\NMB2BDriver\Tests;
 use DSNA\NMB2BDriver\Models\EAUPChain;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class AirspaceServicesTest
+ * @package DSNA\NMB2BDriver\Tests
+ */
 class AirspaceServicesTest extends TestCase
 {
     private $soapClient;
@@ -48,6 +52,9 @@ class AirspaceServicesTest extends TestCase
         return $this->soapClient;
     }
 
+    /**
+     * @covers \DSNA\NMB2BDriver\Services\AirspaceServices::retrieveEAUPChain()
+     */
     public function testRetrieveEAUPChain()
     {
         $now = new \DateTime('now');
