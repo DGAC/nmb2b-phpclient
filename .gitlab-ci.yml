@@ -1,3 +1,7 @@
+cache:
+  paths:
+  - vendor/
+
 before_script:
 - export http_proxy=http://10.196.32.91:3142
 - apt-get update -y
@@ -8,8 +12,7 @@ before_script:
 - php -r "if (hash_file('SHA384', 'composer-setup.php') === file_get_contents('installer.sig')) { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
 - php composer-setup.php
 - php -r "unlink('composer-setup.php'); unlink('installer.sig');"
-- php composer.phar install
-- composer install --no-interaction --prefer-dist
+- php composer.phar install --no-interaction --prefer-dist
 - sed -e '/$CERTPATH/$AIRSPACESERVICEPATH' --in-place tests/config.php
 
 test:7.1:
