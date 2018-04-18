@@ -39,6 +39,8 @@ class AirspaceServicesTest extends TestCase
         ));
         $options['local_cert'] = $config['certPath'];
         $options['passphrase'] = $config['passphrase'];
+        $options['proxy_host'] = $config['proxyhost'];
+        $options['proxy_port'] = $config['proxyport'];
         return new \SoapClient($config['wsdl']['airspaceServices'], $options);
     }
 

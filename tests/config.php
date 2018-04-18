@@ -5,5 +5,7 @@ return array(
         'airspaceServices' => 'AirspaceServices_PREOPS_21.5.0.wsdl',
         'flowServices' => 'FlowServices_PREOPS_21.5.0.wsdl'
     ),
-    'passphrase' => 'PASSPHRASE'
+    'passphrase' => 'PASSPHRASE',
+    'proxyhost' => 'PROXYHOST',
+    'proxyport' => 'PROXYPORT'
 );
