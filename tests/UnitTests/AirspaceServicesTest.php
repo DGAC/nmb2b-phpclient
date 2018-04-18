@@ -21,27 +21,31 @@ use PHPUnit\Framework\TestCase;
 
 class AirspaceServicesTest extends TestCase
 {
+    private $soapClient;
 
     private function getSoapClient()
     {
-        $config = include('./tests/config.php');
-        $options = array(
-            'trace' => 1,
-            'exceptions' => true,
-            'cache_wsdl' => WSDL_CACHE_NONE
-        );
-        $options['stream_context'] = stream_context_create(array(
-            'ssl' => array(
-                'verify_peer' => false,
-                'verify_peer_name' => false,
-                'allow_self_signed' => true
-            )
-        ));
-        $options['local_cert'] = $config['certPath'];
-        $options['passphrase'] = $config['passphrase'];
-        $options['proxy_host'] = $config['proxyhost'];
-        $options['proxy_port'] = $config['proxyport'];
-        return new \SoapClient($config['wsdl']['airspaceServices'], $options);
+        if($this->soapClient == null) {
+            $config = include('./tests/config.php');
+            $options = array(
+                'trace' => 1,
+                'exceptions' => true,
+                'cache_wsdl' => WSDL_CACHE_NONE
+            );
+            $options['stream_context'] = stream_context_create(array(
+                'ssl' => array(
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
+                )
+            ));
+            $options['local_cert'] = $config['certPath'];
+            $options['passphrase'] = $config['passphrase'];
+            $options['proxy_host'] = $config['proxyhost'];
+            $options['proxy_port'] = $config['proxyport'];
+            $this->soapClient = new \SoapClient($config['wsdl']['airspaceServices'], $options);
+        }
+        return $this->soapClient;
     }
 
     public function testRetrieveEAUPChain()
