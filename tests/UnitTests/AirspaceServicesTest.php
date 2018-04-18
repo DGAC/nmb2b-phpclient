@@ -57,6 +57,8 @@ class AirspaceServicesTest extends TestCase
 
         $this->getSoapClient()->retrieveEAUPChain($params);
 
+        echo 'Response \n';
+        echo $this->getSoapClient()->__getLastResponse();
         try {
             $result = new EAUPChain($this->getSoapClient()->__getLastResponse());
         } catch( \Exception $e) {
