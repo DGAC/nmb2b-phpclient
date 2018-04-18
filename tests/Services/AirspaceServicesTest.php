@@ -14,22 +14,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-namespace DSNA\NMB2BDriver\Tests;
-
-use DSNA\NMB2BDriver\Models\EAUPChain;
+use DSNA\NMB2BDriver\Services\AirspaceServices;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Class AirspaceServicesTest
- * @package DSNA\NMB2BDriver\Tests
  */
 class AirspaceServicesTest extends TestCase
 {
-    private $soapClient;
+    private $airspaceServices;
 
-    private function getSoapClient()
+    private function getSoapClient() : AirspaceServices
     {
-        if($this->soapClient == null) {
+        if($this->airspaceServices == null) {
             $config = include('./tests/config.php');
             $options = array(
                 'trace' => 1,
@@ -47,28 +44,16 @@ class AirspaceServicesTest extends TestCase
             $options['passphrase'] = $config['passphrase'];
             $options['proxy_host'] = $config['proxyhost'];
             $options['proxy_port'] = $config['proxyport'];
-            $this->soapClient = new \SoapClient($config['wsdl']['airspaceServices'], $options);
+            $this->airspaceServices = new AirspaceServices(new \SoapClient($config['wsdl']['airspaceServices'], $options));
         }
-        return $this->soapClient;
+        return $this->airspaceServices;
     }
 
-    /**
-     * @covers \DSNA\NMB2BDriver\Services\AirspaceServices::retrieveEAUPChain()
-     */
     public function testRetrieveEAUPChain()
     {
-        $now = new \DateTime('now');
-
         $chainDate = new \DateTime('2018-04-17');
-
-        $params = array(
-            'sendTime' => $now->format('Y-m-d H:i:s'),
-            'chainDate' => $chainDate->format('Y-m-d')
-        );
-
-        $this->getSoapClient()->retrieveEAUPChain($params);
-
-        $result = new EAUPChain($this->getSoapClient()->__getLastResponse());
+        
+        $result = $this->getSoapClient()->retrieveEAUPChain($chainDate);
 
         $this->assertEquals(5, $result->getAUPSequenceNumber());
         $this->assertEquals(17, intval($result->getLastSequenceNumber()));

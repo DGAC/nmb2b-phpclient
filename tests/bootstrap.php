@@ -7,4 +7,4 @@ date_default_timezone_set('UTC');
 
 $loader = require dirname(__DIR__) . '/vendor/autoload.php';
 
-$loader->add('DSNA\\NMB2BDriver\\UnitTests\\', __DIR__);
+$loader->add('DSNA\\NMB2BDriver\\', __DIR__);

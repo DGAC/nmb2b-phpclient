@@ -11,7 +11,7 @@
 
     <testsuites>
         <testsuite name="NM B2B API Unit Test Suites">
-            <directory>./tests/UnitTests</directory>
+            <directory>./tests/</directory>
         </testsuite>
     </testsuites>
     <filter>
