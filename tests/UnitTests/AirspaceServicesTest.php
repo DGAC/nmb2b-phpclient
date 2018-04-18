@@ -24,7 +24,7 @@ class AirspaceServicesTest extends TestCase
 
     private function getSoapClient()
     {
-        $config = include('../config.php');
+        $config = include('./tests/config.php');
         $options = array(
             'trace' => 1,
             'exceptions' => true,
@@ -38,11 +38,11 @@ class AirspaceServicesTest extends TestCase
             )
         ));
         $options['local_cert'] = $config['certPath'];
-        $options['passphrase'] = $config['passPhrase'];
+        $options['passphrase'] = $config['passphrase'];
         return new \SoapClient($config['wsdl']['airspaceServices'], $options);
     }
 
-    public function retrieveEAUPChainTest()
+    public function testRetrieveEAUPChain()
     {
         $now = new \DateTime('now');
 

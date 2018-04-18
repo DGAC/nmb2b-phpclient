@@ -16,7 +16,7 @@ before_script:
 - sed -e "s?CERTPATH?$CERTPATH?" --in-place tests/config.php
 - sed -e "s?AIRSPACESERVICES?$AIRSPACESERVICEPATH?" --in-place tests/config.php
 - sed -e "s?FLOWSERVICES?$FLOWSERVICEPATH?" --in-place tests/config.php
-- sed -e "s?PASSPHRASE?$PASSPHRASE?" --in-place tests/config.php
+- sed -e "s?PASSPHRASE?$(echo $PASSPHRASE | sed -e 's/\\/\\\\/g; s/\//\\\//g; s/&/\\\&/g')?" --in-place tests/config.php
 
 test:7.1:
   image: php:7.1
