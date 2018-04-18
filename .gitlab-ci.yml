@@ -1,7 +1,7 @@
 before_script:
 - export http_proxy=http://10.196.32.91:3142
 - apt-get update -y
-- apt-get install -qqy git unzip wget
+- apt-get install -qqy git unzip wget libxml2-dev
 - docker-php-ext-install -j$(nproc) soap
 - wget https://composer.github.io/installer.sig -O - -q | tr -d '\n' > installer.sig
 - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
