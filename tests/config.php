@@ -1,9 +1,9 @@
 <?php
 return array(
-    'certPath' => 'CERTPATH',
+    'certPath' => 'CC0000001626_500.pem',
     'wsdl' => array(
-        'airspaceServices' => 'AIRSPACESERVICES',
-        'flowServices' => 'FLOWSERVICES'
+        'airspaceServices' => 'AirspaceServices_PREOPS_21.5.0.wsdl',
+        'flowServices' => 'FlowServices_PREOPS_21.5.0.wsdl'
     ),
     'passphrase' => 'PASSPHRASE'
 );
