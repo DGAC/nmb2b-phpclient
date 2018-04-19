@@ -41,4 +41,19 @@ Retrieve EAUP Chain from Airspace Services
 
 ```php
 $eaupchain = $client->airspaceServices()->retrieveEAUPChain(new \DateTime('now'));
+
+//Get last AUP sequence number published before 0600 UTC
+$seq = $eaupchain->getAUPSequenceNumber()
+```
+
+### Example 2
+
+Retrieve regulations for a specified TV
+
+```php
+
+$start = new \DateTime('2018-04-18 00:00:00');
+$end = new \DateTime('2018-04-18 23:59:59');
+
+$regulations = $client->flowServices()->queryRegulations($start, $end, 'LF*');
 ```
