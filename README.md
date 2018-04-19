@@ -1,5 +1,7 @@
 # PHP Client for NM B2B Services #
 
+[![pipeline status](https://gitlab.asap.dsna.fr/asap/nmb2b-phpclient/badges/master/pipeline.svg)](https://gitlab.asap.dsna.fr/asap/nmb2b-phpclient/commits/master) [![coverage report](https://gitlab.asap.dsna.fr/asap/nmb2b-phpclient/badges/master/coverage.svg)](https://gitlab.asap.dsna.fr/asap/nmb2b-phpclient/commits/master)
+
 ## NM B2B Web Services
 
 http://www.eurocontrol.int/service/network-manager-business-business-b2b-web-services

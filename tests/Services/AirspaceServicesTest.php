@@ -52,10 +52,27 @@ class AirspaceServicesTest extends TestCase
     public function testRetrieveEAUPChain()
     {
         $chainDate = new \DateTime('2018-04-17');
-        
+
         $result = $this->getSoapClient()->retrieveEAUPChain($chainDate);
 
         $this->assertEquals(5, $result->getAUPSequenceNumber());
         $this->assertEquals(17, intval($result->getLastSequenceNumber()));
+    }
+
+    public function testRetrieveEAUPRSAs()
+    {
+        $date = new \DateTime('2018-04-17');
+        $designators = "LF*";
+        $sequenceNumber = 5;
+
+        $result = $this->getSoapClient()->retrieveEAUPRSAs($designators, $date, $sequenceNumber);
+
+        $lfcba16b = $result->getAirspacesWithDesignator("LFCBA16B");
+        $this->assertEquals(5, count($lfcba16b));
+
+        $airspace = $lfcba16b[0];
+
+        $this->assertEquals("LFCBA16B", \DSNA\NMB2BDriver\Models\EAUPRSAs::getAirspaceDesignator($airspace));
+
     }
 }
