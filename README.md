@@ -14,7 +14,7 @@ http://www.eurocontrol.int/service/network-manager-business-business-b2b-web-ser
 
 ### Composer
 
-To install run `composer require dsna/nmb2b-phpclient`
+To install run `composer require dgac/nmb2b-phpclient`
 
 ## Configuration
 
