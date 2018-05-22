@@ -15,6 +15,9 @@
  */
 
 use DSNA\NMB2BDriver\Services\FlowServices;
+
+use DSNA\NMB2BDriver\Models\RegulationListReply;
+
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -56,8 +59,31 @@ class FlowServicesTest extends TestCase
         $end = new \DateTime('2018-05-18 ');
         $end->setTime(23,59);
 
+        $result = $this->getSoapClient()->queryRegulations($start, $end, "EG*");
+
+        $this->assertEquals(11, count($result->getRegulations()));
+
         $result = $this->getSoapClient()->queryRegulations($start, $end);
 
         $this->assertEquals(34, count($result->getRegulations()));
+
+        $regul = $result->getRegulations()[0];
+
+        $this->assertEquals("LFBOA18E", RegulationListReply::getDataId($regul));
+        $this->assertEquals("LFBOARR", RegulationListReply::getRegulationName($regul));
+        $this->assertEquals("LFBO ARRIVALS", RegulationListReply::getDescription($regul));
+        $this->assertEquals("10", RegulationListReply::getNormalRate($regul));
+        $this->assertEquals("WEATHER", RegulationListReply::getReason($regul));
+
+        $wef = "2018-05-18 05:30" . '+00:00';
+        $dateWef = new DateTime($wef);
+        $unt = "2018-05-18 09:00" . '+00:00';
+        $dateUnt = new DateTime($unt);
+
+        $this->assertEquals($dateWef, RegulationListReply::getDateTimeStart($regul));
+        $this->assertEquals($dateUnt, RegulationListReply::getDateTimeEnd($regul));
+
+        $this->assertEquals("CANCELLED", RegulationListReply::getRegulationState($regul));
+
     }
 }
