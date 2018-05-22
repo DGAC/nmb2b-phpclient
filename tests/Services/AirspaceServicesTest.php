@@ -56,7 +56,7 @@ class AirspaceServicesTest extends TestCase
         $result = $this->getSoapClient()->retrieveEAUPChain($chainDate);
 
         $this->assertEquals(5, $result->getAUPSequenceNumber());
-        $this->assertEquals(17, intval($result->getLastSequenceNumber()));
+        $this->assertEquals(18, intval($result->getLastSequenceNumber()));
     }
 
     public function testRetrieveEAUPRSAs()
