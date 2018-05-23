@@ -15,6 +15,8 @@
  */
 
 use DSNA\NMB2BDriver\Services\AirspaceServices;
+use DSNA\NMB2BDriver\Models\EAUPRSAs;
+
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -72,7 +74,19 @@ class AirspaceServicesTest extends TestCase
 
         $airspace = $lfcba16b[0];
 
-        $this->assertEquals("LFCBA16B", \DSNA\NMB2BDriver\Models\EAUPRSAs::getAirspaceDesignator($airspace));
+        $this->assertEquals("LFCBA16B", EAUPRSAs::getAirspaceDesignator($airspace));
+
+        $start = "2018-04-17 06:30";
+        $startDate = new DateTime($start . '+00:00');
+        $end = "2018-04-17 22:00";
+        $endDate = new DateTime($end . '+00:00');
+
+        $this->assertEquals($start, EAUPRSAs::getAirspaceTimeBegin($airspace));
+        $this->assertEquals($startDate, EAUPRSAs::getAirspaceDateTimeBegin($airspace));
+        $this->assertEquals($end, EAUPRSAs::getAirspaceTimeEnd($airspace));
+        $this->assertEquals($endDate, EAUPRSAs::getAirspaceDateTimeEnd());
+        $this->assertEquals("065", EAUPRSAs::getAirspaceLowerLimit($airspace));
+        $this->assertEquals("105", EAUPRSAs::getAirspaceUpperLimit($airspace));
 
     }
 }
