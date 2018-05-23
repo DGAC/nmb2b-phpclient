@@ -52,6 +52,9 @@ class FlowServicesTest extends TestCase
         return $this->flowServices;
     }
 
+    /**
+     * @return \DSNA\NMB2BDriver\Models\Regulation
+     */
     public function testQueryRegulations()
     {
         $start = new \DateTime('2018-05-18 ');
@@ -69,21 +72,39 @@ class FlowServicesTest extends TestCase
 
         $regul = $result->getRegulations()[0];
 
-        $this->assertEquals("LFBOA18E", RegulationListReply::getDataId($regul));
-        $this->assertEquals("LFBOARR", RegulationListReply::getRegulationName($regul));
-        $this->assertEquals("LFBO ARRIVALS", RegulationListReply::getDescription($regul));
-        $this->assertEquals("10", RegulationListReply::getNormalRate($regul));
-        $this->assertEquals("WEATHER", RegulationListReply::getReason($regul));
+        return new \DSNA\NMB2BDriver\Models\Regulation($regul);
+
+    }
+
+    /**
+     * @param \DSNA\NMB2BDriver\Models\Regulation $regulation
+     * @depends testQueryRegulations
+     * @covers \DSNA\NMB2BDriver\Models\Regulation::getDataId()
+     * @covers \DSNA\NMB2BDriver\Models\Regulation::getRegulationName()
+     * @covers \DSNA\NMB2BDriver\Models\Regulation::getDescription()
+     * @covers \DSNA\NMB2BDriver\Models\Regulation::getNormalRate()
+     * @covers \DSNA\NMB2BDriver\Models\Regulation::getReason()
+     * @covers \DSNA\NMB2BDriver\Models\Regulation::getDateTimeStart()
+     * @covers \DSNA\NMB2BDriver\Models\Regulation::getDateTimeEnd()
+     * @covers \DSNA\NMB2BDriver\Models\Regulation::getRegulationState()
+     */
+    public function testRegulation(\DSNA\NMB2BDriver\Models\Regulation $regulation)
+    {
+
+        $this->assertEquals("LFBOA18E", $regulation->getDataId());
+        $this->assertEquals("LFBOARR", $regulation->getRegulationName());
+        $this->assertEquals("LFBO ARRIVALS", $regulation->getDescription());
+        $this->assertEquals("10", $regulation->getNormalRate());
+        $this->assertEquals("WEATHER", $regulation->getReason());
 
         $wef = "2018-05-18 05:30" . '+00:00';
         $dateWef = new DateTime($wef);
         $unt = "2018-05-18 09:00" . '+00:00';
         $dateUnt = new DateTime($unt);
 
-        $this->assertEquals($dateWef, RegulationListReply::getDateTimeStart($regul));
-        $this->assertEquals($dateUnt, RegulationListReply::getDateTimeEnd($regul));
+        $this->assertEquals($dateWef, $regulation->getDateTimeStart());
+        $this->assertEquals($dateUnt, $regulation->getDateTimeEnd());
 
-        $this->assertEquals("CANCELLED", RegulationListReply::getRegulationState($regul));
-
+        $this->assertEquals("CANCELLED", $regulation->getRegulationState());
     }
 }

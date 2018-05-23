@@ -81,6 +81,14 @@ class AirspaceServicesTest extends TestCase
 
     /**
      * @depends testRetrieveEAUPRSAs
+     * @param \DSNA\NMB2BDriver\Models\Airspace $airspace
+     * @covers \DSNA\NMB2BDriver\Models\Airspace::getDesignator()
+     * @covers \DSNA\NMB2BDriver\Models\Airspace::getTimeBegin()
+     * @covers \DSNA\NMB2BDriver\Models\Airspace::getDateTimeBegin()
+     * @covers \DSNA\NMB2BDriver\Models\Airspace::getTimeEnd()
+     * @covers \DSNA\NMB2BDriver\Models\Airspace::getDateTimeEnd()
+     * @covers \DSNA\NMB2BDriver\Models\Airspace::getLowerLimit()
+     * @covers \DSNA\NMB2BDriver\Models\Airspace::getUpperLimit()
      */
     public function testAirspace(\DSNA\NMB2BDriver\Models\Airspace $airspace)
     {

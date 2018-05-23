@@ -22,7 +22,11 @@ namespace DSNA\NMB2BDriver\Models;
  */
 class RegulationListReply extends SoapResponse
 {
-    public function getRegulations() {
+    /**
+     * @return null|\SimpleXMLElement[]
+     */
+    public function getRegulations()
+    {
         if($this->getXML() != null) {
             return $this->getXML()->xpath('//regulations/item');
         } else {
@@ -30,59 +34,4 @@ class RegulationListReply extends SoapResponse
         }
     }
 
-    /**
-     * @param $regulation
-     * @return string
-     */
-    public static function getDataId($regulation) {
-        return (string) $regulation->regulationId;
-    }
-
-    /**
-     * @param $regulation
-     * @return string
-     */
-    public static function getRegulationName($regulation) {
-        return (string) $regulation->location->id;
-    }
-
-    public static function getDescription($regulation) {
-        return (string) $regulation->location->description;
-    }
-
-    public static function getNormalRate($regulation)
-    {
-        return (string) $regulation->initialConstraints->normalRate;
-    }
-
-    /**
-     * @param $regulation
-     * @return string
-     */
-    public static function getReason($regulation) {
-        return (string) $regulation->reason;
-    }
-
-    /**
-     * @param $regulation
-     * @return \DateTime
-     */
-    public static function getDateTimeStart($regulation) {
-        $time = $regulation->applicability->wef . '+00:00';
-        return new \DateTime($time);
-    }
-
-    /**
-     * @param $regulation
-     * @return \DateTime
-     */
-    public static function getDateTimeEnd($regulation) {
-        $time = $regulation->applicability->unt . '+00:00';
-        return new \DateTime($time);
-    }
-
-    public static function getRegulationState($regulation)
-    {
-        return (string) $regulation->regulationState;
-    }
 }
