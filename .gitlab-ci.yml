@@ -36,6 +36,6 @@ test:7.1:NM210:
   script:
   - wget --header "PRIVATE-TOKEN:${ACCESSTOKEN}" "${WSDLPATH210}"
   - unzip wsdl210.zip
-  - sed -e "s?AIRSPACESERVICESWSDL?AirspaceServices_PREOPS_21.5.0.wsdl?" --in-place tests/config.php
-  - sed -e "s?FLOWSERVICESWSDL?FlowServices_PREOPS_21.5.0.wsdl?" --in-place tests/config.php
+  - sed -e "s?AIRSPACESERVICESWSDL?AirspaceServices_PREOPS_21.0.0.wsdl?" --in-place tests/config.php
+  - sed -e "s?FLOWSERVICESWSDL?FlowServices_PREOPS_21.0.0.wsdl?" --in-place tests/config.php
   - vendor/bin/phpunit --coverage-text --colors=never

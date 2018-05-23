@@ -84,7 +84,7 @@ class AirspaceServicesTest extends TestCase
         $this->assertEquals($start, EAUPRSAs::getAirspaceTimeBegin($airspace));
         $this->assertEquals($startDate, EAUPRSAs::getAirspaceDateTimeBegin($airspace));
         $this->assertEquals($end, EAUPRSAs::getAirspaceTimeEnd($airspace));
-        $this->assertEquals($endDate, EAUPRSAs::getAirspaceDateTimeEnd());
+        $this->assertEquals($endDate, EAUPRSAs::getAirspaceDateTimeEnd($airspace));
         $this->assertEquals("065", EAUPRSAs::getAirspaceLowerLimit($airspace));
         $this->assertEquals("105", EAUPRSAs::getAirspaceUpperLimit($airspace));
 
