@@ -39,3 +39,23 @@ test:7.1:NM210:
   - sed -e "s?AIRSPACESERVICESWSDL?AirspaceServices_PREOPS_21.0.0.wsdl?" --in-place tests/config.php
   - sed -e "s?FLOWSERVICESWSDL?FlowServices_PREOPS_21.0.0.wsdl?" --in-place tests/config.php
   - vendor/bin/phpunit --coverage-text --colors=never
+
+test:7.2:NM215:
+  image: php:7.2
+  stage: test
+  script:
+  - wget --header "PRIVATE-TOKEN:${ACCESSTOKEN}" "${WSDLPATH215}"
+  - unzip wsdl215.zip
+  - sed -e "s?AIRSPACESERVICESWSDL?AirspaceServices_PREOPS_21.5.0.wsdl?" --in-place tests/config.php
+  - sed -e "s?FLOWSERVICESWSDL?FlowServices_PREOPS_21.5.0.wsdl?" --in-place tests/config.php
+  - vendor/bin/phpunit --coverage-text --colors=never
+
+test:7.2:NM210:
+  image: php:7.2
+  stage: test
+  script:
+  - wget --header "PRIVATE-TOKEN:${ACCESSTOKEN}" "${WSDLPATH210}"
+  - unzip wsdl210.zip
+  - sed -e "s?AIRSPACESERVICESWSDL?AirspaceServices_PREOPS_21.0.0.wsdl?" --in-place tests/config.php
+  - sed -e "s?FLOWSERVICESWSDL?FlowServices_PREOPS_21.0.0.wsdl?" --in-place tests/config.php
+  - vendor/bin/phpunit --coverage-text --colors=never
