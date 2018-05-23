@@ -61,6 +61,7 @@ class AirspaceServicesTest extends TestCase
         $this->assertEquals(18, intval($result->getLastSequenceNumber()));
     }
 
+
     public function testRetrieveEAUPRSAs()
     {
         $date = new \DateTime('2018-04-17');
@@ -72,21 +73,29 @@ class AirspaceServicesTest extends TestCase
         $lfcba16b = $result->getAirspacesWithDesignator("LFCBA16B");
         $this->assertEquals(5, count($lfcba16b));
 
-        $airspace = $lfcba16b[0];
+        $airspace = new \DSNA\NMB2BDriver\Models\Airspace($lfcba16b[0]);
 
-        $this->assertEquals("LFCBA16B", EAUPRSAs::getAirspaceDesignator($airspace));
+        return $airspace;
+
+    }
+
+    /**
+     * @depends testRetrieveEAUPRSAs
+     */
+    public function testAirspace(\DSNA\NMB2BDriver\Models\Airspace $airspace)
+    {
+        $this->assertEquals("LFCBA16B", $airspace->getDesignator());
 
         $start = "2018-04-17T06:30:00";
         $startDate = new DateTime($start . '+00:00');
         $end = "2018-04-17T22:00:00";
         $endDate = new DateTime($end . '+00:00');
 
-        $this->assertEquals($start, EAUPRSAs::getAirspaceTimeBegin($airspace));
-        $this->assertEquals($startDate, EAUPRSAs::getAirspaceDateTimeBegin($airspace));
-        $this->assertEquals($end, EAUPRSAs::getAirspaceTimeEnd($airspace));
-        $this->assertEquals($endDate, EAUPRSAs::getAirspaceDateTimeEnd($airspace));
-        $this->assertEquals("065", EAUPRSAs::getAirspaceLowerLimit($airspace));
-        $this->assertEquals("105", EAUPRSAs::getAirspaceUpperLimit($airspace));
-
+        $this->assertEquals($start, $airspace->getTimeBegin());
+        $this->assertEquals($startDate, $airspace->getDateTimeBegin());
+        $this->assertEquals($end, $airspace->getTimeEnd());
+        $this->assertEquals($endDate, $airspace->getDateTimeEnd());
+        $this->assertEquals("065", $airspace->getLowerLimit());
+        $this->assertEquals("105", $airspace->getUpperLimit());
     }
 }
