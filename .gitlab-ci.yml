@@ -20,6 +20,16 @@ before_script:
 - sed -e "s?PROXYPORT?$PROXYPORT?" --in-place tests/config.php
 - sed -e "s?PROXYHOST?$PROXYHOST?" --in-place tests/config.php
 
+test:7.1:NM220:
+  image: php:7.1
+  stage: test
+  script:
+  - wget --header "PRIVATE-TOKEN:${ACCESSTOKEN}" "${WSDLPATH220}"
+  - unzip wsdl220.zip
+  - sed -e "s?AIRSPACESERVICESWSDL?AirspaceServices_PREOPS_22.0.0.wsdl?" --in-place tests/config.php
+  - sed -e "s?FLOWSERVICESWSDL?FlowServices_PREOPS_22.0.0.wsdl?" --in-place tests/config.php
+  - vendor/bin/phpunit --coverage-text --colors=never
+
 test:7.1:NM215:
   image: php:7.1
   stage: test
@@ -38,6 +48,16 @@ test:7.1:NM210:
   - unzip wsdl210.zip
   - sed -e "s?AIRSPACESERVICESWSDL?AirspaceServices_PREOPS_21.0.0.wsdl?" --in-place tests/config.php
   - sed -e "s?FLOWSERVICESWSDL?FlowServices_PREOPS_21.0.0.wsdl?" --in-place tests/config.php
+  - vendor/bin/phpunit --coverage-text --colors=never
+
+test:7.2:NM220:
+  image: php:7.2
+  stage: test
+  script:
+  - wget --header "PRIVATE-TOKEN:${ACCESSTOKEN}" "${WSDLPATH220}"
+  - unzip wsdl220.zip
+  - sed -e "s?AIRSPACESERVICESWSDL?AirspaceServices_PREOPS_22.0.0.wsdl?" --in-place tests/config.php
+  - sed -e "s?FLOWSERVICESWSDL?FlowServices_PREOPS_22.0.0.wsdl?" --in-place tests/config.php
   - vendor/bin/phpunit --coverage-text --colors=never
 
 test:7.2:NM215:
