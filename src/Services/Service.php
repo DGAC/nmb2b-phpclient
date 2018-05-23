@@ -48,7 +48,7 @@ class Service {
 
     public function getNMVersion() : string
     {
-        echo $this->getSoapClient()->setLocation();
+        echo $this->getSoapClient()->__setLocation();
     }
 
 }
