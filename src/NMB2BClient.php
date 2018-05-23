@@ -86,7 +86,7 @@ class NMB2BClient
         return $this->airspaceServices;
     }
 
-    public function flowServices()
+    public function flowServices() : FlowServices
     {
         if($this->flowServices == null)
         {
