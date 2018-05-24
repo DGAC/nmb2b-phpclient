@@ -57,10 +57,9 @@ Retrieve regulations for a specified TV
 $start = new \DateTime('2018-04-18 00:00:00');
 $end = new \DateTime('2018-04-18 23:59:59');
 
-$regulations = $client->flowServices()->queryRegulations($start, $end, 'LF*');
+$result = $client->flowServices()->queryRegulations($start, $end, 'LF*');
 
-foreach($regulations as $r) {
-    $regulation = new Regulation($r);
+foreach($result->getRegulations() as $regulation) {
     $name = $regulation->getRegulationName();
 }
 
@@ -68,8 +67,8 @@ foreach($regulations as $r) {
 
 ### Example 3
 
-Get current version of NM services
+Get current version of NM services.
 
 ```php
-$client->getNMVersion(); //returns "21.5.0"
+$client->airspaceServices()->getNMVersion(); //returns "21.5.0"
 ```

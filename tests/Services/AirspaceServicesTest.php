@@ -77,10 +77,15 @@ class AirspaceServicesTest extends TestCase
 
         $result = $this->getSoapClient()->retrieveEAUPRSAs($designators, $date, $sequenceNumber);
 
+        $lfcba16bXML = $result->getAirspacesWithDesignatorAsXML("LFCBA16B");
+        $this->assertEquals(5, count($lfcba16bXML));
+
         $lfcba16b = $result->getAirspacesWithDesignator("LFCBA16B");
         $this->assertEquals(5, count($lfcba16b));
 
-        $airspace = new \DSNA\NMB2BDriver\Models\Airspace($lfcba16b[0]);
+        $this->assertInstanceOf(\DSNA\NMB2BDriver\Models\Airspace::class, $lfcba16b[0]);
+
+        $airspace = new \DSNA\NMB2BDriver\Models\Airspace($lfcba16bXML[0]);
 
         return $airspace;
 

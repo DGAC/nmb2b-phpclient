@@ -64,13 +64,17 @@ class FlowServicesTest extends TestCase
 
         $result = $this->getSoapClient()->queryRegulations($start, $end, "EG*");
 
+        $this->assertEquals(11, count($result->getRegulationsAsXML()));
         $this->assertEquals(11, count($result->getRegulations()));
 
         $result = $this->getSoapClient()->queryRegulations($start, $end);
 
+        $this->assertEquals(34, count($result->getRegulationsAsXML()));
         $this->assertEquals(34, count($result->getRegulations()));
 
-        $regul = $result->getRegulations()[0];
+        $this->assertInstanceOf(\DSNA\NMB2BDriver\Models\Regulation::class, $result->getRegulations()[0]);
+
+        $regul = $result->getRegulationsAsXML()[0];
 
         return new \DSNA\NMB2BDriver\Models\Regulation($regul);
 

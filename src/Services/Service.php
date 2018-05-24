@@ -45,6 +45,10 @@ class Service {
         return $text;
     }
 
+    /**
+     * x.y.z version of NM Services
+     * @return string
+     */
     public function getNMVersion()
     {
         $url = explode("/",$this->getSoapClient()->__setLocation());

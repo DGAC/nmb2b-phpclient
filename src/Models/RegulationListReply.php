@@ -22,16 +22,33 @@ namespace DSNA\NMB2BDriver\Models;
  */
 class RegulationListReply extends SoapResponse
 {
+
+    private $regulations;
+
     /**
      * @return null|\SimpleXMLElement[]
      */
-    public function getRegulations()
+    public function getRegulationsAsXML()
     {
         if($this->getXML() != null) {
             return $this->getXML()->xpath('//regulations/item');
         } else {
             return null;
         }
+    }
+
+    /**
+     * @return Regulation[]
+     */
+    public function getRegulations() : array
+    {
+        if($this->regulations == null) {
+            $this->regulations = array();
+            foreach ($this->getRegulationsAsXML() as $r) {
+                $this->regulations[] = new Regulation($r);
+            }
+        }
+        return $this->regulations;
     }
 
 }

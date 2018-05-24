@@ -30,16 +30,29 @@ class EAUPRSAs extends SoapResponse
     /**
      * Get all Airspace elements whith a designator starting with <code>$designator</code>
      *
-     * @param type $designator
-     * @return array
+     * @param string $designator
+     * @return null|\SimpleXMLElement[]
      */
-    public function getAirspacesWithDesignator($designator)
+    public function getAirspacesWithDesignatorAsXML(string $designator)
     {
         if($this->getXML() != null) {
             return $this->getXML()->xpath('//aixm:Airspace//aixm:AirspaceTimeSlice[starts-with(aixm:designator,"' . $designator . '")]/../..');
         } else {
             return null;
         }
+    }
+
+    /**
+     * @param string $designator
+     * @return Airspace[]
+     */
+    public function getAirspacesWithDesignator(string $designator) : array
+    {
+        $airspaces = array();
+        foreach ($this->getAirspacesWithDesignatorAsXML($designator) as $a) {
+            $airspaces[] = new Airspace($a);
+        }
+        return $airspaces;
     }
 
 }
