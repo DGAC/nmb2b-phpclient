@@ -66,8 +66,7 @@ class AirspaceServicesTest extends TestCase
 
     public function testGetNMVersion()
     {
-        echo $this->getSoapClient()->getNMVersion();
-        $this->expectOutputString($this->version);
+        $this->assertEquals($this->version, $this->getSoapClient()->getNMVersion());
     }
 
     public function testRetrieveEAUPRSAs()
