@@ -26,6 +26,7 @@ use PHPUnit\Framework\TestCase;
 class FlowServicesTest extends TestCase
 {
     private $flowServices;
+    private $version;
 
     private function getSoapClient() : FlowServices
     {
@@ -47,6 +48,7 @@ class FlowServicesTest extends TestCase
             $options['passphrase'] = $config['passphrase'];
             $options['proxy_host'] = $config['proxyhost'];
             $options['proxy_port'] = $config['proxyport'];
+            $this->version = $config['version'];
             $this->flowServices = new FlowServices($config['wsdl']['flowServices'], $options);
         }
         return $this->flowServices;
