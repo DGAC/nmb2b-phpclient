@@ -16,6 +16,7 @@
 
 namespace DSNA\NMB2BDriver;
 
+use DSNA\NMB2BDriver\Exception\UnsupportedNMVersion;
 use DSNA\NMB2BDriver\Exception\WSDLFileUnavailable;
 use DSNA\NMB2BDriver\Services\AirspaceServices;
 use DSNA\NMB2BDriver\Services\FlowServices;
@@ -29,6 +30,8 @@ class NMB2BClient
 
     private $airspaceServices;
     private $flowServices;
+
+    public static const SUPPORTED_VERSIONS = ["21.0.0", "21.5.0", "22.0.0"];
 
     /**
      * Default options
@@ -68,6 +71,7 @@ class NMB2BClient
     /**
      * @return AirspaceServices
      * @throws WSDLFileUnavailable
+     * @throws UnsupportedNMVersion
      */
     public function airspaceServices() : AirspaceServices
     {
@@ -76,6 +80,9 @@ class NMB2BClient
             if(array_key_exists('airspaceservices', $this->wsdl)) {
                 if(file_exists($this->wsdl['airspaceservices'])) {
                     $this->airspaceServices = new AirspaceServices(new \SoapClient($this->wsdl['airspaceservices'], $this->options));
+                    if(!in_array($this->airspaceServices->getNMVersion(), NMB2BClient::SUPPORTED_VERSIONS)) {
+                        throw new UnsupportedNMVersion($this->airspaceServices->getNMVersion() . ' is not supported.');
+                    }
                 } else {
                     throw new WSDLFileUnavailable('AirspaceServices WSDL is not a file.');
                 }
@@ -93,6 +100,9 @@ class NMB2BClient
             if(array_key_exists('flowservices', $this->wsdl)) {
                 if(file_exists($this->wsdl['flowservices'])) {
                     $this->flowServices = new FlowServices(new \SoapClient($this->wsdl['flowservices'], $this->options));
+                    if(!in_array($this->flowServices->getNMVersion(), NMB2BClient::SUPPORTED_VERSIONS)) {
+                        throw new UnsupportedNMVersion($this->flowServices->getNMVersion() . ' is not supported.');
+                    }
                 } else {
                     throw new WSDLFileUnavailable('FlowServices WSDL is not a file.');
                 }

@@ -20,6 +20,8 @@ class Service {
 
     private $soapClient;
 
+    private $version;
+
     public function __construct(\SoapClient $client)
     {
         $this->soapClient = $client;
@@ -49,10 +51,13 @@ class Service {
      * x.y.z version of NM Services
      * @return string
      */
-    public function getNMVersion()
+    public function getNMVersion() : string
     {
-        $url = explode("/",$this->getSoapClient()->__setLocation());
-        return end($url);
+        if($this->version == null) {
+            $url = explode("/", $this->getSoapClient()->__setLocation());
+            $this->version = end($url);
+        }
+        return $this->version;
     }
 
 }
