@@ -47,7 +47,7 @@ class FlowServicesTest extends TestCase
             $options['passphrase'] = $config['passphrase'];
             $options['proxy_host'] = $config['proxyhost'];
             $options['proxy_port'] = $config['proxyport'];
-            $this->flowServices = new FlowServices(new \SoapClient($config['wsdl']['flowServices'], $options));
+            $this->flowServices = new FlowServices($config['wsdl']['flowServices'], $options);
         }
         return $this->flowServices;
     }
