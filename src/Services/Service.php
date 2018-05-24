@@ -49,7 +49,6 @@ class Service {
 
     private function extractNMVersion($wsdl)
     {
-        $this->version = $wsdl;
         $data = file_get_contents($wsdl);
         if($data == false) {
             throw new WSDLFileUnavailable("Unable to load WSDL");

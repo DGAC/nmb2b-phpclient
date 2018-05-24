@@ -40,14 +40,14 @@ class Airspace
      *
      * @return type
      */
-    public function getDesignator()
+    public function getDesignator() : string
     {
         $timeslices = $this->xml->children('http://www.aixm.aero/schema/5.1')->timeSlice;
         foreach ($timeslices as $timeslice) {
             $airspacetimeslice = $timeslice->children('http://www.aixm.aero/schema/5.1')->AirspaceTimeSlice;
             foreach ($airspacetimeslice->children('http://www.aixm.aero/schema/5.1') as $child) {
                 if ($child->getName() === 'designator') {
-                    return $child;
+                    return (string) $child;
                 }
             }
         }
@@ -129,7 +129,7 @@ class Airspace
      *
      * @return String
      */
-    public function getUpperLimit()
+    public function getUpperLimit() : string
     {
         $timeslices = $this->xml->children('http://www.aixm.aero/schema/5.1')->timeSlice;
         if (count($timeslices) === 2) {
@@ -137,7 +137,7 @@ class Airspace
                 $airspacetimeslice = $timeslice->children('http://www.aixm.aero/schema/5.1')->AirspaceTimeSlice;
                 foreach ($airspacetimeslice->children('http://www.aixm.aero/schema/5.1') as $child) {
                     if ($child->getName() === 'activation') {
-                        return $child
+                        return (string) $child
                             ->children('http://www.aixm.aero/schema/5.1')
                             ->AirspaceActivation
                             ->children('http://www.aixm.aero/schema/5.1')
@@ -156,7 +156,7 @@ class Airspace
      * @throws \UnexpectedValueException
      * @return String
      */
-    public function getLowerLimit()
+    public function getLowerLimit() : string
     {
         $timeslices = $this->xml->children('http://www.aixm.aero/schema/5.1')->timeSlice;
         if (count($timeslices) === 2) {
@@ -164,7 +164,7 @@ class Airspace
                 $airspacetimeslice = $timeslice->children('http://www.aixm.aero/schema/5.1')->AirspaceTimeSlice;
                 foreach ($airspacetimeslice->children('http://www.aixm.aero/schema/5.1') as $child) {
                     if ($child->getName() === 'activation') {
-                        return $child
+                        return (string) $child
                             ->children('http://www.aixm.aero/schema/5.1')
                             ->AirspaceActivation
                             ->children('http://www.aixm.aero/schema/5.1')
