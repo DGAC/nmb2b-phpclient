@@ -58,4 +58,18 @@ $start = new \DateTime('2018-04-18 00:00:00');
 $end = new \DateTime('2018-04-18 23:59:59');
 
 $regulations = $client->flowServices()->queryRegulations($start, $end, 'LF*');
+
+foreach($regulations as $r) {
+    $regulation = new Regulation($r);
+    $name = $regulation->getRegulationName();
+}
+
+```
+
+### Example 3
+
+Get current version of NM services
+
+```php
+$client->getNMVersion(); //returns "21.5.0"
 ```

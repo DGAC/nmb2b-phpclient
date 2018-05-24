@@ -35,7 +35,7 @@ class AirspaceServicesTest extends TestCase
             $options = array(
                 'trace' => 1,
                 'exceptions' => true,
-                'cache_wsdl' => WSDL_CACHE_NONEinf
+                'cache_wsdl' => WSDL_CACHE_NONE
             );
             $options['stream_context'] = stream_context_create(array(
                 'ssl' => array(
