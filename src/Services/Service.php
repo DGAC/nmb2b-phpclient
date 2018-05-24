@@ -16,6 +16,8 @@
 
 namespace DSNA\NMB2BDriver\Services;
 
+use DSNA\NMB2BDriver\Exception\WSDLFileUnavailable;
+
 class Service {
 
     private $client;
@@ -48,6 +50,9 @@ class Service {
     private function extractNMVersion($wsdl)
     {
         $data = file_get_contents($wsdl);
+        if($data == false) {
+            throw new WSDLFileUnavailable("Unable to load WSDL");
+        }
         $xml = new \DOMDocument();
         $xml->loadXML($data);
 
