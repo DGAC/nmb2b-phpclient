@@ -26,6 +26,8 @@ class AirspaceServicesTest extends TestCase
 {
     private $airspaceServices;
 
+    private $version;
+
     private function getSoapClient() : AirspaceServices
     {
         if($this->airspaceServices == null) {
@@ -33,7 +35,7 @@ class AirspaceServicesTest extends TestCase
             $options = array(
                 'trace' => 1,
                 'exceptions' => true,
-                'cache_wsdl' => WSDL_CACHE_NONE
+                'cache_wsdl' => WSDL_CACHE_NONEinf
             );
             $options['stream_context'] = stream_context_create(array(
                 'ssl' => array(
@@ -46,6 +48,7 @@ class AirspaceServicesTest extends TestCase
             $options['passphrase'] = $config['passphrase'];
             $options['proxy_host'] = $config['proxyhost'];
             $options['proxy_port'] = $config['proxyport'];
+            $this->version = $config['version'];
             $this->airspaceServices = new AirspaceServices(new \SoapClient($config['wsdl']['airspaceServices'], $options));
         }
         return $this->airspaceServices;
@@ -61,6 +64,11 @@ class AirspaceServicesTest extends TestCase
         $this->assertEquals(18, intval($result->getLastSequenceNumber()));
     }
 
+    public function testGetNMVersion()
+    {
+        echo $this->getSoapClient()->getNMVersion();
+        $this->expectOutputString($this->version);
+    }
 
     public function testRetrieveEAUPRSAs()
     {

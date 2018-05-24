@@ -7,5 +7,6 @@ return array(
     ),
     'passphrase' => 'PASSPHRASE',
     'proxyhost' => 'PROXYHOST',
-    'proxyport' => 'PROXYPORT'
+    'proxyport' => 'PROXYPORT',
+    'version' => 'VERSION'
 );

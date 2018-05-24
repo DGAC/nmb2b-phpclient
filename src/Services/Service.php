@@ -23,7 +23,6 @@ class Service {
     public function __construct(\SoapClient $client)
     {
         $this->soapClient = $client;
-        $this->getNMVersion();
     }
 
     /**
@@ -48,7 +47,7 @@ class Service {
 
     public function getNMVersion()
     {
-        echo $this->getSoapClient()->__setLocation();
+        return end(explode("/",$this->getSoapClient()->__setLocation()));
     }
 
 }
