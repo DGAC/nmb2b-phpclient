@@ -64,6 +64,10 @@ class AirspaceServicesTest extends TestCase
         $this->assertEquals(18, intval($result->getLastSequenceNumber()));
     }
 
+    /**
+     * @covers \DSNA\NMB2BDriver\Services\Service::extractNMVersion()
+     * @covers \DSNA\NMB2BDriver\Services\Service::getNMVersion()
+     */
     public function testGetNMVersion()
     {
         $this->assertEquals($this->version, $this->getSoapClient()->getNMVersion());

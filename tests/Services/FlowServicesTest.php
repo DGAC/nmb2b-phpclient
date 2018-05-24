@@ -53,6 +53,15 @@ class FlowServicesTest extends TestCase
     }
 
     /**
+     * @covers \DSNA\NMB2BDriver\Services\Service::getNMVersion()
+     * @covers \DSNA\NMB2BDriver\Services\Service::extractNMVersion()
+     */
+    public function testGetNMVersion()
+    {
+        $this->assertEquals($this->version, $this->getSoapClient()->getNMVersion());
+    }
+
+    /**
      * @return \DSNA\NMB2BDriver\Models\Regulation
      */
     public function testQueryRegulations()

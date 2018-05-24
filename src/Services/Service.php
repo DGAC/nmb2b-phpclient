@@ -18,21 +18,14 @@ namespace DSNA\NMB2BDriver\Services;
 
 class Service {
 
-    private $soapClient;
+    private $client;
 
     private $version;
 
-    public function __construct(\SoapClient $client)
+    public function __construct($wsdl, $options)
     {
-        $this->soapClient = $client;
-    }
-
-    /**
-     * @return \SoapClient
-     */
-    public function getSoapClient() : \SoapClient
-    {
-        return $this->soapClient;
+        $this->client = new \SoapClient($wsdl, $options);
+        $this->extractNMVersion($wsdl);
     }
 
     public function getFullErrorMessage() {
@@ -47,16 +40,31 @@ class Service {
         return $text;
     }
 
+    public function getSoapClient() : \SoapClient
+    {
+        return $this->client;
+    }
+
+    private function extractNMVersion($wsdl)
+    {
+        $data = file_get_contents($wsdl);
+        $xml = new \DOMDocument();
+        $xml->loadXML($data);
+
+        $location = $xml->getElementsByTagNameNS("http://schemas.xmlsoap.org/wsdl/soap/", "address");
+        foreach ($location as $l){
+            $loc = $l->getAttribute("location");
+            $url = explode('/', $loc);
+            $this->version = end($url);
+        }
+    }
+
     /**
      * x.y.z version of NM Services
      * @return string
      */
     public function getNMVersion() : string
     {
-        if($this->version == null) {
-            $url = explode("/", $this->getSoapClient()->__setLocation());
-            $this->version = end($url);
-        }
         return $this->version;
     }
 
