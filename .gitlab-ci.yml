@@ -3,7 +3,6 @@ cache:
   - vendor/
 
 before_script:
-- export http_proxy=http://10.196.32.91:3142
 - apt-get update -y
 - apt-get install -qqy git unzip wget libxml2-dev
 - pecl install xdebug
