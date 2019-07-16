@@ -6,7 +6,7 @@ return array(
         'flowServices' => 'FLOWSERVICESWSDL'
     ),
     'passphrase' => 'PASSPHRASE',
-    'proxyhost' => 'PROXYHOST',
-    'proxyport' => 'PROXYPORT',
+    //'proxyhost' => 'PROXYHOST',
+    //'proxyport' => 'PROXYPORT',
     'version' => 'VERSION'
 );
