@@ -46,8 +46,8 @@ class FlowServicesTest extends TestCase
             ));
             $options['local_cert'] = $config['certPath'];
             $options['passphrase'] = $config['passphrase'];
-            $options['proxy_host'] = $config['proxyhost'];
-            $options['proxy_port'] = $config['proxyport'];
+            //$options['proxy_host'] = $config['proxyhost'];
+            //$options['proxy_port'] = $config['proxyport'];
             $this->version = $config['version'];
             $this->flowServices = new FlowServices($config['wsdl']['flowServices'], $options);
         }
