@@ -18,12 +18,22 @@ namespace DSNA\NMB2BDriver\Models;
 
 class EAUPRSAs extends SoapResponse
 {
-    public function __construct($strXML)
+
+    private $aixmNS;
+
+    public function __construct($strXML, $version)
     {
         parent::__construct($strXML);
+
+        if($version >= 23) {
+            $this->aixmNS = 'http://www.aixm.aero/schema/5.1.1';
+        } else {
+            $this->aixmNS = 'http://www.aixm.aero/schema/5.1';
+        }
+
         $this->getXML()->registerXPathNamespace('adrmsg', "http://www.eurocontrol.int/cfmu/b2b/ADRMessage");
         $this->getXML()->registerXPathNamespace('gml', "http://www.opengis.net/gml/3.2");
-        $this->getXML()->registerXPathNamespace('aixm', 'http://www.aixm.aero/schema/5.1');
+        $this->getXML()->registerXPathNamespace('aixm', $this->aixmNS);
     }
 
 

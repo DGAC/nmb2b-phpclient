@@ -23,10 +23,15 @@ class Airspace
     private $xml;
 
     /**
+     * @var string depends on NM Version
+     */
+    private $aixmNS;
+
+    /**
      * Airspace constructor.
      * @param \SimpleXMLElement $airspace
      */
-    public function __construct(\SimpleXMLElement $airspace)
+    public function __construct(\SimpleXMLElement $airspace, $aixmNS)
     {
         if($airspace->getName() === 'Airspace') {
             $this->xml = $airspace;
@@ -42,10 +47,10 @@ class Airspace
      */
     public function getDesignator() : string
     {
-        $timeslices = $this->xml->children('http://www.aixm.aero/schema/5.1')->timeSlice;
+        $timeslices = $this->xml->children($this->aixmNS)->timeSlice;
         foreach ($timeslices as $timeslice) {
-            $airspacetimeslice = $timeslice->children('http://www.aixm.aero/schema/5.1')->AirspaceTimeSlice;
-            foreach ($airspacetimeslice->children('http://www.aixm.aero/schema/5.1') as $child) {
+            $airspacetimeslice = $timeslice->children($this->aixmNS)->AirspaceTimeSlice;
+            foreach ($airspacetimeslice->children($this->aixmNS) as $child) {
                 if ($child->getName() === 'designator') {
                     return (string) $child;
                 }
@@ -61,11 +66,11 @@ class Airspace
      */
     public function getTimeBegin()
     {
-        $timeslices = $this->xml->children('http://www.aixm.aero/schema/5.1')->timeSlice;
+        $timeslices = $this->xml->children($this->aixmNS)->timeSlice;
         if (count($timeslices) >= 2) {
             foreach ($timeslices as $timeslice) {
                 $validtime = $timeslice
-                    ->children('http://www.aixm.aero/schema/5.1')
+                    ->children($this->aixmNS)
                     ->AirspaceTimeSlice
                     ->children('http://www.opengis.net/gml/3.2')
                     ->validTime;
@@ -96,11 +101,11 @@ class Airspace
      */
     public function getTimeEnd()
     {
-        $timeslices = $this->xml->children('http://www.aixm.aero/schema/5.1')->timeSlice;
+        $timeslices = $this->xml->children($this->aixmNS)->timeSlice;
         if (count($timeslices) === 2) {
             foreach ($timeslices as $timeslice) {
                 $validtime = $timeslice
-                    ->children('http://www.aixm.aero/schema/5.1')
+                    ->children($this->aixmNS)
                     ->AirspaceTimeSlice
                     ->children('http://www.opengis.net/gml/3.2')
                     ->validTime;
@@ -131,20 +136,20 @@ class Airspace
      */
     public function getUpperLimit() : string
     {
-        $timeslices = $this->xml->children('http://www.aixm.aero/schema/5.1')->timeSlice;
+        $timeslices = $this->xml->children($this->aixmNS)->timeSlice;
         if (count($timeslices) === 2) {
             foreach ($timeslices as $timeslice) {
-                $airspacetimeslice = $timeslice->children('http://www.aixm.aero/schema/5.1')->AirspaceTimeSlice;
-                foreach ($airspacetimeslice->children('http://www.aixm.aero/schema/5.1') as $child) {
+                $airspacetimeslice = $timeslice->children($this->aixmNS)->AirspaceTimeSlice;
+                foreach ($airspacetimeslice->children($this->aixmNS) as $child) {
                     if ($child->getName() === 'activation') {
                         return (string) $child
-                            ->children('http://www.aixm.aero/schema/5.1')
+                            ->children($this->aixmNS)
                             ->AirspaceActivation
-                            ->children('http://www.aixm.aero/schema/5.1')
+                            ->children($this->aixmNS)
                             ->levels
-                            ->children('http://www.aixm.aero/schema/5.1')
+                            ->children($this->aixmNS)
                             ->AirspaceLayer
-                            ->children('http://www.aixm.aero/schema/5.1')
+                            ->children($this->aixmNS)
                             ->upperLimit;
                     }
                 }
@@ -158,20 +163,20 @@ class Airspace
      */
     public function getLowerLimit() : string
     {
-        $timeslices = $this->xml->children('http://www.aixm.aero/schema/5.1')->timeSlice;
+        $timeslices = $this->xml->children($this->aixmNS)->timeSlice;
         if (count($timeslices) === 2) {
             foreach ($timeslices as $timeslice) {
-                $airspacetimeslice = $timeslice->children('http://www.aixm.aero/schema/5.1')->AirspaceTimeSlice;
-                foreach ($airspacetimeslice->children('http://www.aixm.aero/schema/5.1') as $child) {
+                $airspacetimeslice = $timeslice->children($this->aixmNS)->AirspaceTimeSlice;
+                foreach ($airspacetimeslice->children($this->aixmNS) as $child) {
                     if ($child->getName() === 'activation') {
                         return (string) $child
-                            ->children('http://www.aixm.aero/schema/5.1')
+                            ->children($this->aixmNS)
                             ->AirspaceActivation
-                            ->children('http://www.aixm.aero/schema/5.1')
+                            ->children($this->aixmNS)
                             ->levels
-                            ->children('http://www.aixm.aero/schema/5.1')
+                            ->children($this->aixmNS)
                             ->AirspaceLayer
-                            ->children('http://www.aixm.aero/schema/5.1')
+                            ->children($this->aixmNS)
                             ->lowerLimit;
                     }
                 }

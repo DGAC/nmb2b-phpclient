@@ -24,6 +24,9 @@ class Service {
 
     private $version;
 
+    private $versionFloat;
+
+
     public function __construct($wsdl, $options)
     {
         $this->client = new \SoapClient($wsdl, $options);
@@ -61,6 +64,8 @@ class Service {
             $loc = $l->getAttribute("location");
             $url = explode('/', $loc);
             $this->version = end($url);
+            $aVersion = explode(".", $this->version);
+            $this->versionFloat = (int) $aVersion[0] + ((int) $aVersion[1])*0.1 + ((int) $aVersion[2])*0.01;
         }
     }
 
@@ -73,4 +78,7 @@ class Service {
         return $this->version;
     }
 
+    public function getNMVersionFloat() : float {
+        return $this->versionFloat;
+    }
 }

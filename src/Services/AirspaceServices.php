@@ -69,6 +69,6 @@ class AirspaceServices extends Service
 
         $this->getSoapClient()->retrieveEAUPRSAs($params);
 
-        return new EAUPRSAs($this->getSoapClient()->__getLastResponse());
+        return new EAUPRSAs($this->getSoapClient()->__getLastResponse(), $this->getNMVersionFloat());
     }
 }
