@@ -35,7 +35,7 @@ test:7.3:NM225:
   stage: test
   script:
   - wget --header "PRIVATE-TOKEN:${ACCESSTOKEN}" "${WSDLPATH225}" -O wsdl225.zip
-  - unzip wsdl220.zip
+  - unzip wsdl225.zip
   - sed -e "s?VERSION?22.5.0?" --in-place tests/config.php
   - sed -e "s?AIRSPACESERVICESWSDL?AirspaceServices_PREOPS_22.5.0.wsdl?" --in-place tests/config.php
   - sed -e "s?FLOWSERVICESWSDL?FlowServices_PREOPS_22.5.0.wsdl?" --in-place tests/config.php
@@ -68,7 +68,7 @@ test:7.2:NM230:
   stage: test
   script:
   - wget --header "PRIVATE-TOKEN:${ACCESSTOKEN}" "${WSDLPATH230}" -O wsdl230.zip
-  - unzip wsdl220.zip
+  - unzip wsdl230.zip
   - sed -e "s?VERSION?23.0.0?" --in-place tests/config.php
   - sed -e "s?AIRSPACESERVICESWSDL?AirspaceServices_PREOPS_23.0.0.wsdl?" --in-place tests/config.php
   - sed -e "s?FLOWSERVICESWSDL?FlowServices_PREOPS_23.0.0.wsdl?" --in-place tests/config.php
