@@ -41,7 +41,7 @@ class AirspaceServices extends Service
         );
 
         $this->getSoapClient()->retrieveEAUPChain($params);
-
+        
         return new EAUPChain($this->getSoapClient()->__getLastResponse());
     }
 

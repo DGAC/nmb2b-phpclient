@@ -60,7 +60,7 @@ class EAUPRSAs extends SoapResponse
     {
         $airspaces = array();
         foreach ($this->getAirspacesWithDesignatorAsXML($designator) as $a) {
-            $airspaces[] = new Airspace($a);
+            $airspaces[] = new Airspace($a, $this->aixmNS);
         }
         return $airspaces;
     }

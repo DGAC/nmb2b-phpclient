@@ -33,6 +33,7 @@ class Airspace
      */
     public function __construct(\SimpleXMLElement $airspace, $aixmNS)
     {
+        $this->aixmNS = $aixmNS;
         if($airspace->getName() === 'Airspace') {
             $this->xml = $airspace;
         } else {
