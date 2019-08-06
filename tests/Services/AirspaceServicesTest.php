@@ -28,6 +28,8 @@ class AirspaceServicesTest extends TestCase
 
     private $version;
 
+    private $aixmNS;
+
     private function getSoapClient() : AirspaceServices
     {
         if($this->airspaceServices == null) {
@@ -46,22 +48,28 @@ class AirspaceServicesTest extends TestCase
             ));
             $options['local_cert'] = $config['certPath'];
             $options['passphrase'] = $config['passphrase'];
-            //$options['proxy_host'] = $config['proxyhost'];
-            //$options['proxy_port'] = $config['proxyport'];
+            $options['proxy_host'] = $config['proxyhost'];
+            $options['proxy_port'] = $config['proxyport'];
             $this->version = $config['version'];
             $this->airspaceServices = new AirspaceServices($config['wsdl']['airspaceServices'], $options);
+
+            if($this->getSoapClient()->getNMVersionFloat() >= 23) {
+                $this->aixmNS = 'http://www.aixm.aero/schema/5.1.1';
+            } else {
+                $this->aixmNS = 'http://www.aixm.aero/schema/5.1';
+            }
         }
         return $this->airspaceServices;
     }
 
     public function testRetrieveEAUPChain()
     {
-        $chainDate = new \DateTime('2018-04-17');
+        $chainDate = new \DateTime('2019-08-01');
 
         $result = $this->getSoapClient()->retrieveEAUPChain($chainDate);
 
-        $this->assertEquals(5, $result->getAUPSequenceNumber());
-        $this->assertEquals(18, intval($result->getLastSequenceNumber()));
+        $this->assertEquals(3, $result->getAUPSequenceNumber());
+        $this->assertEquals(12, intval($result->getLastSequenceNumber()));
     }
 
     /**
@@ -76,21 +84,21 @@ class AirspaceServicesTest extends TestCase
 
     public function testRetrieveEAUPRSAs()
     {
-        $date = new \DateTime('2018-04-17');
+        $date = new \DateTime('2019-08-01');
         $designators = "LF*";
-        $sequenceNumber = 5;
+        $sequenceNumber = 3;
 
         $result = $this->getSoapClient()->retrieveEAUPRSAs($designators, $date, $sequenceNumber);
 
         $lfcba16bXML = $result->getAirspacesWithDesignatorAsXML("LFCBA16B");
-        $this->assertEquals(5, count($lfcba16bXML));
+        $this->assertEquals(7, count($lfcba16bXML));
 
         $lfcba16b = $result->getAirspacesWithDesignator("LFCBA16B");
-        $this->assertEquals(5, count($lfcba16b));
+        $this->assertEquals(7, count($lfcba16b));
 
         $this->assertInstanceOf(\DSNA\NMB2BDriver\Models\Airspace::class, $lfcba16b[0]);
 
-        $airspace = new \DSNA\NMB2BDriver\Models\Airspace($lfcba16bXML[0]);
+        $airspace = new \DSNA\NMB2BDriver\Models\Airspace($lfcba16bXML[0], $this->aixmNS);
 
         return $airspace;
 
@@ -111,16 +119,16 @@ class AirspaceServicesTest extends TestCase
     {
         $this->assertEquals("LFCBA16B", $airspace->getDesignator());
 
-        $start = "2018-04-17T06:30:00";
+        $start = "2019-08-01T06:00:00";
         $startDate = new DateTime($start . '+00:00');
-        $end = "2018-04-17T22:00:00";
+        $end = "2019-08-01T06:30:00";
         $endDate = new DateTime($end . '+00:00');
 
         $this->assertEquals($start, $airspace->getTimeBegin());
         $this->assertEquals($startDate, $airspace->getDateTimeBegin());
         $this->assertEquals($end, $airspace->getTimeEnd());
         $this->assertEquals($endDate, $airspace->getDateTimeEnd());
-        $this->assertEquals("065", $airspace->getLowerLimit());
-        $this->assertEquals("105", $airspace->getUpperLimit());
+        $this->assertEquals("105", $airspace->getLowerLimit());
+        $this->assertEquals("245", $airspace->getUpperLimit());
     }
 }

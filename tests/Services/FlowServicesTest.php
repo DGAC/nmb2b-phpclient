@@ -46,8 +46,8 @@ class FlowServicesTest extends TestCase
             ));
             $options['local_cert'] = $config['certPath'];
             $options['passphrase'] = $config['passphrase'];
-            //$options['proxy_host'] = $config['proxyhost'];
-            //$options['proxy_port'] = $config['proxyport'];
+            $options['proxy_host'] = $config['proxyhost'];
+            $options['proxy_port'] = $config['proxyport'];
             $this->version = $config['version'];
             $this->flowServices = new FlowServices($config['wsdl']['flowServices'], $options);
         }
@@ -69,20 +69,20 @@ class FlowServicesTest extends TestCase
      */
     public function testQueryRegulations()
     {
-        $start = new \DateTime('2018-05-18 ');
+        $start = new \DateTime('2019-08-01 ');
         $start->setTime(0,0);
-        $end = new \DateTime('2018-05-18 ');
+        $end = new \DateTime('2019-08-01 ');
         $end->setTime(23,59);
 
         $result = $this->getSoapClient()->queryRegulations($start, $end, "EG*");
 
-        $this->assertEquals(11, count($result->getRegulationsAsXML()));
-        $this->assertEquals(11, count($result->getRegulations()));
+        $this->assertEquals(4, count($result->getRegulationsAsXML()));
+        $this->assertEquals(4, count($result->getRegulations()));
 
         $result = $this->getSoapClient()->queryRegulations($start, $end);
 
-        $this->assertEquals(34, count($result->getRegulationsAsXML()));
-        $this->assertEquals(34, count($result->getRegulations()));
+        $this->assertEquals(66, count($result->getRegulationsAsXML()));
+        $this->assertEquals(66, count($result->getRegulations()));
 
         $this->assertInstanceOf(\DSNA\NMB2BDriver\Models\Regulation::class, $result->getRegulations()[0]);
 
@@ -107,20 +107,20 @@ class FlowServicesTest extends TestCase
     public function testRegulation(\DSNA\NMB2BDriver\Models\Regulation $regulation)
     {
 
-        $this->assertEquals("LFBOA18E", $regulation->getDataId());
-        $this->assertEquals("LFBOARR", $regulation->getRegulationName());
-        $this->assertEquals("LFBO ARRIVALS", $regulation->getDescription());
-        $this->assertEquals("10", $regulation->getNormalRate());
-        $this->assertEquals("WEATHER", $regulation->getReason());
+        $this->assertEquals("ME301", $regulation->getDataId());
+        $this->assertEquals("LFME3", $regulation->getRegulationName());
+        $this->assertEquals("LFMM -  E3 SECTOR", $regulation->getDescription());
+        $this->assertEquals("34", $regulation->getNormalRate());
+        $this->assertEquals("ATC_CAPACITY", $regulation->getReason());
 
-        $wef = "2018-05-18 05:30" . '+00:00';
+        $wef = "2019-08-01 10:15" . '+00:00';
         $dateWef = new DateTime($wef);
-        $unt = "2018-05-18 09:00" . '+00:00';
+        $unt = "2019-08-01 13:00" . '+00:00';
         $dateUnt = new DateTime($unt);
 
         $this->assertEquals($dateWef, $regulation->getDateTimeStart());
         $this->assertEquals($dateUnt, $regulation->getDateTimeEnd());
 
-        $this->assertEquals("CANCELLED", $regulation->getRegulationState());
+        $this->assertEquals("TERMINATED", $regulation->getRegulationState());
     }
 }
