@@ -107,15 +107,15 @@ class FlowServicesTest extends TestCase
     public function testRegulation(\DSNA\NMB2BDriver\Models\Regulation $regulation)
     {
 
-        $this->assertEquals("RJU01A", $regulation->getDataId());
-        $this->assertEquals("LFRJU", $regulation->getRegulationName());
-        $this->assertEquals("LFRR: JU + JI", $regulation->getDescription());
-        $this->assertEquals("42", $regulation->getNormalRate());
+        $this->assertEquals("MW101M", $regulation->getDataId());
+        $this->assertEquals("LFMMW1", $regulation->getRegulationName());
+        $this->assertEquals("W1 SECTOR", $regulation->getDescription());
+        $this->assertEquals("35", $regulation->getNormalRate());
         $this->assertEquals("ATC_EQUIPMENT", $regulation->getReason());
 
-        $wef = "2019-09-01 12:25" . '+00:00';
+        $wef = "2019-09-01 08:00" . '+00:00';
         $dateWef = new DateTime($wef);
-        $unt = "2019-09-01 16:00" . '+00:00';
+        $unt = "2019-09-01 14:00" . '+00:00';
         $dateUnt = new DateTime($unt);
 
         $this->assertEquals($dateWef, $regulation->getDateTimeStart());
