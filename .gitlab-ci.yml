@@ -8,6 +8,14 @@ before_script:
 - pecl install xdebug
 - docker-php-ext-enable xdebug
 - docker-php-ext-install -j$(nproc) soap
+#download sonar scanner
+- wget -O sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.0.0.1744-linux.zip
+- unzip ./sonar-scanner.zip
+#install node to allow css analysis
+- curl -sL https://deb.nodesource.com/setup_10.x > setup_10.x
+- chmod +x setup_10.x
+- ./setup_10.x
+- apt-get install -qqy nodejs
 - wget https://composer.github.io/installer.sig -O - -q | tr -d '\n' > installer.sig
 - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 - php -r "if (hash_file('SHA384', 'composer-setup.php') === file_get_contents('installer.sig')) { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
@@ -29,6 +37,7 @@ test:7.3:NM230:
   - sed -e "s?AIRSPACESERVICESWSDL?AirspaceServices_PREOPS_23.0.0.wsdl?" --in-place tests/config.php
   - sed -e "s?FLOWSERVICESWSDL?FlowServices_PREOPS_23.0.0.wsdl?" --in-place tests/config.php
   - vendor/bin/phpunit --coverage-text --colors=never
+  - ./sonar-scanner-4.0.0.1744-linux/bin/sonar-scanner -Dsonar.login=${SONAR_TOKEN}
 
 test:7.3:NM225:
   image: php:7.3
