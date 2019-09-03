@@ -108,7 +108,7 @@ class FlowServicesTest extends TestCase
     {
 
         $this->assertEquals("MW101M", $regulation->getDataId());
-        $this->assertEquals("LFMMW1", $regulation->getRegulationName());
+        $this->assertEquals("LFMW1", $regulation->getRegulationName());
         $this->assertEquals("W1 SECTOR", $regulation->getDescription());
         $this->assertEquals("35", $regulation->getNormalRate());
         $this->assertEquals("ATC_EQUIPMENT", $regulation->getReason());
