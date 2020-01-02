@@ -69,20 +69,20 @@ class FlowServicesTest extends TestCase
      */
     public function testQueryRegulations()
     {
-        $start = new \DateTime('2019-09-01 ');
+        $start = new \DateTime('2019-12-17 ');
         $start->setTime(0,0);
-        $end = new \DateTime('2019-09-01 ');
+        $end = new \DateTime('2019-12-17 ');
         $end->setTime(23,59);
 
         $result = $this->getSoapClient()->queryRegulations($start, $end, "EG*");
 
-        $this->assertEquals(9, count($result->getRegulationsAsXML()));
-        $this->assertEquals(9, count($result->getRegulations()));
+        $this->assertEquals(4, count($result->getRegulationsAsXML()));
+        $this->assertEquals(4, count($result->getRegulations()));
 
         $result = $this->getSoapClient()->queryRegulations($start, $end);
 
-        $this->assertEquals(159, count($result->getRegulationsAsXML()));
-        $this->assertEquals(159, count($result->getRegulations()));
+        $this->assertEquals(192, count($result->getRegulationsAsXML()));
+        $this->assertEquals(192, count($result->getRegulations()));
 
         $this->assertInstanceOf(\DSNA\NMB2BDriver\Models\Regulation::class, $result->getRegulations()[0]);
 
@@ -107,15 +107,15 @@ class FlowServicesTest extends TestCase
     public function testRegulation(\DSNA\NMB2BDriver\Models\Regulation $regulation)
     {
 
-        $this->assertEquals("MW101M", $regulation->getDataId());
-        $this->assertEquals("LFMW1", $regulation->getRegulationName());
-        $this->assertEquals("W1 SECTOR", $regulation->getDescription());
-        $this->assertEquals("35", $regulation->getNormalRate());
-        $this->assertEquals("ATC_EQUIPMENT", $regulation->getReason());
+        $this->assertEquals("LFQTW17N", $regulation->getDataId());
+        $this->assertEquals("LFQQTRW", $regulation->getRegulationName());
+        $this->assertEquals("LFQQ TMA TRANSITS - WEST", $regulation->getDescription());
+        $this->assertEquals("1", $regulation->getNormalRate());
+        $this->assertEquals("ATC_INDUSTRIAL_ACTION", $regulation->getReason());
 
-        $wef = "2019-09-01 08:00" . '+00:00';
+        $wef = "2019-12-17 17:30" . '+00:00';
         $dateWef = new DateTime($wef);
-        $unt = "2019-09-01 14:00" . '+00:00';
+        $unt = "2019-12-17 22:00" . '+00:00';
         $dateUnt = new DateTime($unt);
 
         $this->assertEquals($dateWef, $regulation->getDateTimeStart());

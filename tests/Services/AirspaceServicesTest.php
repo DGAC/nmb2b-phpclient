@@ -64,12 +64,12 @@ class AirspaceServicesTest extends TestCase
 
     public function testRetrieveEAUPChain()
     {
-        $chainDate = new \DateTime('2019-08-01');
+        $chainDate = new \DateTime('2019-12-02');
 
         $result = $this->getSoapClient()->retrieveEAUPChain($chainDate);
 
-        $this->assertEquals(3, $result->getAUPSequenceNumber());
-        $this->assertEquals(12, intval($result->getLastSequenceNumber()));
+        $this->assertEquals(1, $result->getAUPSequenceNumber());
+        $this->assertEquals(9, intval($result->getLastSequenceNumber()));
     }
 
     /**
@@ -84,7 +84,7 @@ class AirspaceServicesTest extends TestCase
 
     public function testRetrieveEAUPRSAs()
     {
-        $date = new \DateTime('2019-08-01');
+        $date = new \DateTime('2019-12-02');
         $designators = "LF*";
         $sequenceNumber = 3;
 
@@ -119,16 +119,16 @@ class AirspaceServicesTest extends TestCase
     {
         $this->assertEquals("LFCBA16B", $airspace->getDesignator());
 
-        $start = "2019-08-01T06:00:00";
+        $start = "2019-12-02T08:00:00";
         $startDate = new DateTime($start . '+00:00');
-        $end = "2019-08-01T06:30:00";
+        $end = "2019-12-02T20:30:00";
         $endDate = new DateTime($end . '+00:00');
 
         $this->assertEquals($start, $airspace->getTimeBegin());
         $this->assertEquals($startDate, $airspace->getDateTimeBegin());
         $this->assertEquals($end, $airspace->getTimeEnd());
         $this->assertEquals($endDate, $airspace->getDateTimeEnd());
-        $this->assertEquals("105", $airspace->getLowerLimit());
-        $this->assertEquals("245", $airspace->getUpperLimit());
+        $this->assertEquals("65", $airspace->getLowerLimit());
+        $this->assertEquals("105", $airspace->getUpperLimit());
     }
 }
