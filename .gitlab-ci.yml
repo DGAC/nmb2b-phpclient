@@ -27,6 +27,52 @@ before_script:
 - sed -e "s?PROXYPORT?$PROXYPORT?" --in-place tests/config.php
 - sed -e "s?PROXYHOST?$PROXYHOST?" --in-place tests/config.php
 
+test:7.4:NM235:
+  image: php:7.3
+  stage: test
+  script:
+    - wget --header "PRIVATE-TOKEN:${ACCESSTOKEN}" "${WSDLPATH235}" -O wsdl235.zip
+    - unzip wsdl235.zip
+    - sed -e "s?VERSION?23.5.0?" --in-place tests/config.php
+    - sed -e "s?AIRSPACESERVICESWSDL?AirspaceServices_PREOPS_23.5.0.wsdl?" --in-place tests/config.php
+    - sed -e "s?FLOWSERVICESWSDL?FlowServices_PREOPS_23.5.0.wsdl?" --in-place tests/config.php
+    - vendor/bin/phpunit --coverage-text --colors=never
+    - ./sonar-scanner-4.0.0.1744-linux/bin/sonar-scanner -Dsonar.login=${SONAR_TOKEN}
+
+test:7.4:NM230:
+  image: php:7.3
+  stage: test
+  script:
+    - wget --header "PRIVATE-TOKEN:${ACCESSTOKEN}" "${WSDLPATH230}" -O wsdl230.zip
+    - unzip wsdl230.zip
+    - sed -e "s?VERSION?23.0.0?" --in-place tests/config.php
+    - sed -e "s?AIRSPACESERVICESWSDL?AirspaceServices_PREOPS_23.0.0.wsdl?" --in-place tests/config.php
+    - sed -e "s?FLOWSERVICESWSDL?FlowServices_PREOPS_23.0.0.wsdl?" --in-place tests/config.php
+    - vendor/bin/phpunit --coverage-text --colors=never
+    - ./sonar-scanner-4.0.0.1744-linux/bin/sonar-scanner -Dsonar.login=${SONAR_TOKEN}
+
+test:7.4:NM225:
+  image: php:7.3
+  stage: test
+  script:
+    - wget --header "PRIVATE-TOKEN:${ACCESSTOKEN}" "${WSDLPATH225}" -O wsdl225.zip
+    - unzip wsdl225.zip
+    - sed -e "s?VERSION?22.5.0?" --in-place tests/config.php
+    - sed -e "s?AIRSPACESERVICESWSDL?AirspaceServices_PREOPS_22.5.0.wsdl?" --in-place tests/config.php
+    - sed -e "s?FLOWSERVICESWSDL?FlowServices_PREOPS_22.5.0.wsdl?" --in-place tests/config.php
+    - vendor/bin/phpunit --coverage-text --colors=never
+
+test:7.4:NM220:
+  image: php:7.3
+  stage: test
+  script:
+    - wget --header "PRIVATE-TOKEN:${ACCESSTOKEN}" "${WSDLPATH220}" -O wsdl220.zip
+    - unzip wsdl220.zip
+    - sed -e "s?VERSION?22.0.0?" --in-place tests/config.php
+    - sed -e "s?AIRSPACESERVICESWSDL?AirspaceServices_PREOPS_22.0.0.wsdl?" --in-place tests/config.php
+    - sed -e "s?FLOWSERVICESWSDL?FlowServices_PREOPS_22.0.0.wsdl?" --in-place tests/config.php
+    - vendor/bin/phpunit --coverage-text --colors=never
+
 test:7.3:NM235:
   image: php:7.3
   stage: test
@@ -73,17 +119,6 @@ test:7.3:NM220:
   - sed -e "s?FLOWSERVICESWSDL?FlowServices_PREOPS_22.0.0.wsdl?" --in-place tests/config.php
   - vendor/bin/phpunit --coverage-text --colors=never
 
-test:7.3:NM215:
-  image: php:7.3
-  stage: test
-  script:
-  - wget --header "PRIVATE-TOKEN:${ACCESSTOKEN}" "${WSDLPATH215}" -O wsdl215.zip
-  - unzip wsdl215.zip
-  - sed -e "s?VERSION?21.5.0?" --in-place tests/config.php
-  - sed -e "s?AIRSPACESERVICESWSDL?AirspaceServices_PREOPS_21.5.0.wsdl?" --in-place tests/config.php
-  - sed -e "s?FLOWSERVICESWSDL?FlowServices_PREOPS_21.5.0.wsdl?" --in-place tests/config.php
-  - vendor/bin/phpunit --coverage-text --colors=never
-
 test:7.2:NM235:
   image: php:7.2
   stage: test
@@ -126,15 +161,4 @@ test:7.2:NM220:
   - sed -e "s?VERSION?22.0.0?" --in-place tests/config.php
   - sed -e "s?AIRSPACESERVICESWSDL?AirspaceServices_PREOPS_22.0.0.wsdl?" --in-place tests/config.php
   - sed -e "s?FLOWSERVICESWSDL?FlowServices_PREOPS_22.0.0.wsdl?" --in-place tests/config.php
-  - vendor/bin/phpunit --coverage-text --colors=never
-
-test:7.2:NM215:
-  image: php:7.2
-  stage: test
-  script:
-  - wget --header "PRIVATE-TOKEN:${ACCESSTOKEN}" "${WSDLPATH215}" -O wsdl215.zip
-  - unzip wsdl215.zip
-  - sed -e "s?VERSION?21.5.0?" --in-place tests/config.php
-  - sed -e "s?AIRSPACESERVICESWSDL?AirspaceServices_PREOPS_21.5.0.wsdl?" --in-place tests/config.php
-  - sed -e "s?FLOWSERVICESWSDL?FlowServices_PREOPS_21.5.0.wsdl?" --in-place tests/config.php
   - vendor/bin/phpunit --coverage-text --colors=never

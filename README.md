@@ -6,7 +6,7 @@
 
 http://www.eurocontrol.int/service/network-manager-business-business-b2b-web-services
 
-Supported versions : 21.5 - 22.0 - 22.5 - 23.0
+Supported versions : 22.0 - 22.5 - 23.0 - 23.5
 
 ## Requirements
 
