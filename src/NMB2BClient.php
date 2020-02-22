@@ -28,6 +28,8 @@ use DSNA\NMB2BDriver\Services\FlowServices;
 class NMB2BClient
 {
 
+    private $verbose = false;
+
     private $airspaceServices;
     private $flowServices;
 
@@ -112,4 +114,10 @@ class NMB2BClient
         }
         return $this->flowServices;
     }
+
+    public function setVerbose($verbose)
+    {
+        $this->verbose = $verbose;
+    }
+
 }

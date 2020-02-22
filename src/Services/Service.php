@@ -26,8 +26,9 @@ class Service {
 
     private $versionFloat;
 
+    private $verbose = false;
 
-    public function __construct($wsdl, $options)
+    public function __construct($wsdl, $options, $verbose)
     {
         $this->client = new \SoapClient($wsdl, $options);
         $this->extractNMVersion($wsdl);
@@ -81,4 +82,15 @@ class Service {
     public function getNMVersionFloat() : float {
         return $this->versionFloat;
     }
+
+    public function setVerbose($verbose)
+    {
+        $this->verbose = $verbose;
+    }
+
+    public function isVerbose()
+    {
+        return $this->verbose;
+    }
+
 }

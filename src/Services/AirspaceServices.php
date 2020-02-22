@@ -41,7 +41,11 @@ class AirspaceServices extends Service
         );
 
         $this->getSoapClient()->retrieveEAUPChain($params);
-        
+
+        if($this->isVerbose()) {
+            print_r($this->getFullErrorMessage());
+        }
+
         return new EAUPChain($this->getSoapClient()->__getLastResponse());
     }
 
@@ -68,6 +72,10 @@ class AirspaceServices extends Service
         }
 
         $this->getSoapClient()->retrieveEAUPRSAs($params);
+
+        if($this->isVerbose()) {
+            print_r($this->getFullErrorMessage());
+        }
 
         return new EAUPRSAs($this->getSoapClient()->__getLastResponse(), $this->getNMVersionFloat());
     }

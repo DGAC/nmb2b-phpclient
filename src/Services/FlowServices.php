@@ -56,6 +56,10 @@ class FlowServices extends Service
 
         $this->getSoapClient()->queryRegulations($params);
 
+        if($this->isVerbose()) {
+            print_r($this->getFullErrorMessage());
+        }
+
         return new RegulationListReply($this->getSoapClient()->__getLastResponse());
     }
 }
