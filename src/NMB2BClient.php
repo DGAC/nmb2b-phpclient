@@ -81,7 +81,7 @@ class NMB2BClient
         {
             if(array_key_exists('airspaceservices', $this->wsdl)) {
                 if(file_exists($this->wsdl['airspaceservices'])) {
-                    $this->airspaceServices = new AirspaceServices($this->wsdl['airspaceservices'], $this->options);
+                    $this->airspaceServices = new AirspaceServices($this->wsdl['airspaceservices'], $this->options, $this->verbose);
                     if(!in_array($this->airspaceServices->getNMVersion(), NMB2BClient::SUPPORTED_VERSIONS)) {
                         throw new UnsupportedNMVersion($this->airspaceServices->getNMVersion() . ' is not supported.');
                     }
@@ -101,7 +101,7 @@ class NMB2BClient
         {
             if(array_key_exists('flowservices', $this->wsdl)) {
                 if(file_exists($this->wsdl['flowservices'])) {
-                    $this->flowServices = new FlowServices($this->wsdl['flowservices'], $this->options);
+                    $this->flowServices = new FlowServices($this->wsdl['flowservices'], $this->options, $this->verbose);
                     if(!in_array($this->flowServices->getNMVersion(), NMB2BClient::SUPPORTED_VERSIONS)) {
                         throw new UnsupportedNMVersion($this->flowServices->getNMVersion() . ' is not supported.');
                     }
@@ -115,9 +115,15 @@ class NMB2BClient
         return $this->flowServices;
     }
 
-    public function setVerbose($verbose)
+    public function setVerbose(bool $verbose)
     {
         $this->verbose = $verbose;
+        if($this->airspaceServices) {
+            $this->airspaceServices->setVerbose($verbose);
+        }
+        if($this->flowServices) {
+            $this->flowServices->setVerbose($verbose);
+        }
     }
 
 }
