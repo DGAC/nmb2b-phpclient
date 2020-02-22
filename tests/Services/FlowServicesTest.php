@@ -49,7 +49,7 @@ class FlowServicesTest extends TestCase
             //$options['proxy_host'] = $config['proxyhost'];
             //$options['proxy_port'] = $config['proxyport'];
             $this->version = $config['version'];
-            $this->flowServices = new FlowServices($config['wsdl']['flowServices'], $options);
+            $this->flowServices = new FlowServices($config['wsdl']['flowServices'], $options, true);
         }
         return $this->flowServices;
     }
