@@ -32,6 +32,7 @@ class Service {
     {
         $this->client = new \SoapClient($wsdl, $options);
         $this->extractNMVersion($wsdl);
+        $this->verbose = $verbose;
     }
 
     public function getFullErrorMessage() {
