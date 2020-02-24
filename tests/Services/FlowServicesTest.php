@@ -49,7 +49,7 @@ class FlowServicesTest extends TestCase
             //$options['proxy_host'] = $config['proxyhost'];
             //$options['proxy_port'] = $config['proxyport'];
             $this->version = $config['version'];
-            $this->flowServices = new FlowServices($config['wsdl']['flowServices'], $options);
+            $this->flowServices = new FlowServices($config['wsdl']['flowServices'], $options, false);
         }
         return $this->flowServices;
     }
@@ -69,20 +69,20 @@ class FlowServicesTest extends TestCase
      */
     public function testQueryRegulations()
     {
-        $start = new \DateTime('2019-12-17 ');
+        $start = new \DateTime('2020-02-17 ');
         $start->setTime(0,0);
-        $end = new \DateTime('2019-12-17 ');
+        $end = new \DateTime('2020-02-17 ');
         $end->setTime(23,59);
 
         $result = $this->getSoapClient()->queryRegulations($start, $end, "EG*");
 
-        $this->assertEquals(4, count($result->getRegulationsAsXML()));
-        $this->assertEquals(4, count($result->getRegulations()));
+        $this->assertEquals(11, count($result->getRegulationsAsXML()));
+        $this->assertEquals(11, count($result->getRegulations()));
 
         $result = $this->getSoapClient()->queryRegulations($start, $end);
 
-        $this->assertEquals(192, count($result->getRegulationsAsXML()));
-        $this->assertEquals(192, count($result->getRegulations()));
+        $this->assertEquals(4, count($result->getRegulationsAsXML()));
+        $this->assertEquals(4, count($result->getRegulations()));
 
         $this->assertInstanceOf(\DSNA\NMB2BDriver\Models\Regulation::class, $result->getRegulations()[0]);
 
@@ -107,20 +107,20 @@ class FlowServicesTest extends TestCase
     public function testRegulation(\DSNA\NMB2BDriver\Models\Regulation $regulation)
     {
 
-        $this->assertEquals("LFQTW17N", $regulation->getDataId());
-        $this->assertEquals("LFQQTRW", $regulation->getRegulationName());
-        $this->assertEquals("LFQQ TMA TRANSITS - WEST", $regulation->getDescription());
-        $this->assertEquals("1", $regulation->getNormalRate());
-        $this->assertEquals("ATC_INDUSTRIAL_ACTION", $regulation->getReason());
+        $this->assertEquals("MWM17L", $regulation->getDataId());
+        $this->assertEquals("LFMWM", $regulation->getRegulationName());
+        $this->assertEquals("LFMM: W/M COMBINED SECTOR", $regulation->getDescription());
+        $this->assertEquals("40", $regulation->getNormalRate());
+        $this->assertEquals("ATC_STAFFING", $regulation->getReason());
 
-        $wef = "2019-12-17 17:30" . '+00:00';
+        $wef = "2020-02-17 20:40" . '+00:00';
         $dateWef = new DateTime($wef);
-        $unt = "2019-12-17 22:00" . '+00:00';
+        $unt = "2020-02-17 22:00" . '+00:00';
         $dateUnt = new DateTime($unt);
 
         $this->assertEquals($dateWef, $regulation->getDateTimeStart());
         $this->assertEquals($dateUnt, $regulation->getDateTimeEnd());
 
-        $this->assertEquals("CANCELLED", $regulation->getRegulationState());
+        $this->assertEquals("TERMINATED", $regulation->getRegulationState());
     }
 }

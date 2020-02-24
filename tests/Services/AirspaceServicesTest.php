@@ -51,7 +51,7 @@ class AirspaceServicesTest extends TestCase
             //$options['proxy_host'] = $config['proxyhost'];
             //$options['proxy_port'] = $config['proxyport'];
             $this->version = $config['version'];
-            $this->airspaceServices = new AirspaceServices($config['wsdl']['airspaceServices'], $options);
+            $this->airspaceServices = new AirspaceServices($config['wsdl']['airspaceServices'], $options, false);
 
             if($this->getSoapClient()->getNMVersionFloat() >= 23) {
                 $this->aixmNS = 'http://www.aixm.aero/schema/5.1.1';
