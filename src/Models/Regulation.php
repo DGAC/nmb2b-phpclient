@@ -25,6 +25,7 @@ class Regulation //extends RegulationOrMCDMOnly
 {
 
     private $xml;
+    private $initialConstraints;
 
     public function __construct(\SimpleXMLElement $regulation)
     {
@@ -55,12 +56,43 @@ class Regulation //extends RegulationOrMCDMOnly
     }
 
     /**
-     * initialConstraints->normalRate
+     * Returns a string with :
+     * the rate if only one initial constraints exists
+     * "rate → hour ← rate → hour ← rate" if there are several initial constraints
      * @return string
      */
-    public function getNormalRate()
+    public function getNormalRates()
     {
-        return (string) $this->xml->initialConstraints->normalRate;
+        if(count($this->getInitialConstraints()) == 1) {
+            return (string) $this->xml->initialConstraints->normalRate;
+        } else {
+            $str = "";
+            foreach ($this->getInitialConstraints() as $constraint) {
+                if(strlen($str) == 0) {
+                    $str .= $constraint->getNormalRate();
+                } else {
+                    $str .= " → ";
+                    $str .= $constraint->getDateTimeStart()->format("G:i");
+                    $str .= " ← ";
+                    $str .= $constraint->getNormalRate();
+                }
+            }
+            return $str;
+        }
+    }
+
+    /**
+     * @return InitialConstraint[]
+     */
+    public function getInitialConstraints() : array
+    {
+        if($this->initialConstraints == null) {
+            $this->initialConstraints = array();
+            foreach ($this->xml->initialConstraints as $constraint) {
+                $this->initialConstraints[] = new InitialConstraint($constraint);
+            }
+        }
+        return $this->initialConstraints;
     }
 
     /**

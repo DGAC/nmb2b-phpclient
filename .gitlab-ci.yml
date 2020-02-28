@@ -49,7 +49,6 @@ test:7.4:NM230:
     - sed -e "s?AIRSPACESERVICESWSDL?AirspaceServices_PREOPS_23.0.0.wsdl?" --in-place tests/config.php
     - sed -e "s?FLOWSERVICESWSDL?FlowServices_PREOPS_23.0.0.wsdl?" --in-place tests/config.php
     - vendor/bin/phpunit --coverage-text --colors=never
-    - ./sonar-scanner-4.0.0.1744-linux/bin/sonar-scanner -Dsonar.login=${SONAR_TOKEN}
 
 test:7.4:NM225:
   image: php:7.4
@@ -83,7 +82,6 @@ test:7.3:NM235:
     - sed -e "s?AIRSPACESERVICESWSDL?AirspaceServices_PREOPS_23.5.0.wsdl?" --in-place tests/config.php
     - sed -e "s?FLOWSERVICESWSDL?FlowServices_PREOPS_23.5.0.wsdl?" --in-place tests/config.php
     - vendor/bin/phpunit --coverage-text --colors=never
-    - ./sonar-scanner-4.0.0.1744-linux/bin/sonar-scanner -Dsonar.login=${SONAR_TOKEN}
 
 test:7.3:NM230:
   image: php:7.3
@@ -95,7 +93,6 @@ test:7.3:NM230:
   - sed -e "s?AIRSPACESERVICESWSDL?AirspaceServices_PREOPS_23.0.0.wsdl?" --in-place tests/config.php
   - sed -e "s?FLOWSERVICESWSDL?FlowServices_PREOPS_23.0.0.wsdl?" --in-place tests/config.php
   - vendor/bin/phpunit --coverage-text --colors=never
-  - ./sonar-scanner-4.0.0.1744-linux/bin/sonar-scanner -Dsonar.login=${SONAR_TOKEN}
 
 test:7.3:NM225:
   image: php:7.3
