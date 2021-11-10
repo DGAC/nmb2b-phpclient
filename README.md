@@ -33,6 +33,22 @@ $client = new NMB2BClient(
     )
 );
 
+//with a proxy :
+$options = [
+   'proxy_host' => '192.x.x.x',
+   'proxy_port' => '8080'
+];
+
+$client = new NMB2BClient(
+    "path to certificate", 
+    "passphrase", 
+    array(
+        "airspaceservices" => "path to airspace services wsdl file",
+        "flowservices" => "path to flow services wsdl file"
+    ),
+    $options
+);
+
 ```
 
 ## Usage
