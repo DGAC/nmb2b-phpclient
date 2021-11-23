@@ -6,11 +6,11 @@
 
 http://www.eurocontrol.int/service/network-manager-business-business-b2b-web-services
 
-Supported versions : 22.0 - 22.5 - 23.0 - 23.5 - 24.0
+Supported versions : 23.0 - 23.5 - 24.0 - 25.0
 
 ## Requirements
 
-* PHP >= 7.2
+* PHP >= 7.3
 
 ## Installation
 
