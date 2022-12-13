@@ -33,7 +33,7 @@ class NMB2BClient
     private $airspaceServices;
     private $flowServices;
 
-    public const SUPPORTED_VERSIONS = ["23.0.0", "23.5.0", "24.0.0", "25.0.0"];
+    public const SUPPORTED_VERSIONS = ["23.0.0", "23.5.0", "24.0.0", "25.0.0", "26.0.0"];
 
     /**
      * Default options
